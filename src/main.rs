@@ -48,6 +48,8 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     let mut records_with_fluorine = 0usize;
     let mut source_counts = BTreeMap::<String, usize>::new();
     let mut npc_class_counts_for_f = BTreeMap::<String, usize>::new();
+    let mut npc_pathway_counts_for_f = BTreeMap::<String, usize>::new();
+    let mut npc_superclass_counts_for_f = BTreeMap::<String, usize>::new();
 
     for record in spectra.iter() {
         total_records += 1;
@@ -69,15 +71,13 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
         increment(&mut source_counts, &source_dataset);
 
         let npc_classes = metadata_value(metadata, "NPC_CLASSES");
+        let npc_pathways = metadata_value(metadata, "NPC_PATHWAYS");
+        let npc_superclasses = metadata_value(metadata, "NPC_SUPERCLASSES");
 
         if contains_f {
-            if npc_classes.trim().is_empty() {
-                increment(&mut npc_class_counts_for_f, "UNKNOWN");
-            } else {
-                for class_name in split_pipe(&npc_classes) {
-                    increment(&mut npc_class_counts_for_f, class_name);
-                }
-            }
+            increment_pipe_values(&mut npc_pathway_counts_for_f, &npc_pathways);
+            increment_pipe_values(&mut npc_superclass_counts_for_f, &npc_superclasses);
+            increment_pipe_values(&mut npc_class_counts_for_f, &npc_classes);
         }
         writer.serialize(SpectrumMetadataRow {
             spectrum_id: metadata_value(metadata, "SPECTRUMID"),
@@ -88,9 +88,9 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
             organism: metadata_value(metadata, "ORGANISM"),
             ion_mode: format!("{:?}", record.ion_mode()),
             source_instrument: format!("{:?}", record.source_instrument()),
-            npc_superclasses: metadata_value(metadata, "NPC_SUPERCLASSES"),
+            npc_superclasses,
             npc_classes,
-            npc_pathways: metadata_value(metadata, "NPC_PATHWAYS"),
+            npc_pathways,
             chemont_kingdom: metadata_value(metadata, "CHEMONT_KINGDOM"),
             chemont_superclass: metadata_value(metadata, "CHEMONT_SUPERCLASS"),
             chemont_class: metadata_value(metadata, "CHEMONT_CLASS"),
@@ -103,6 +103,18 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     writer.flush()?;
 
     write_counts_csv("reports/source_dataset_counts.csv", &source_counts)?;
+    write_counts_csv_with_totals(
+        "reports/fluorine_npc_pathway_counts.csv",
+        &npc_pathway_counts_for_f,
+        records_with_fluorine,
+    )?;
+
+    write_counts_csv_with_totals(
+        "reports/fluorine_npc_superclass_counts.csv",
+        &npc_superclass_counts_for_f,
+        records_with_fluorine,
+    )?;
+
     write_counts_csv_with_totals(
         "reports/fluorine_npc_class_counts.csv",
         &npc_class_counts_for_f,
@@ -158,7 +170,7 @@ fn write_counts_csv_with_totals(
     total_records: usize,
 ) -> std::result::Result<(), Box<dyn std::error::Error>> {
     let mut writer = csv::Writer::from_path(path)?;
-    writer.write_record(["value","count"])?;
+    writer.write_record(["value", "count"])?;
     for (value, count) in counts {
         writer.write_record([value, &count.to_string()])?;
     }
@@ -193,4 +205,14 @@ fn formula_symbols(formula: &str) -> impl Iterator<Item = String> + '_ {
         }
         None
     })
+}
+
+fn increment_pipe_values(counts: &mut BTreeMap<String, usize>, value: &str) {
+    if value.trim().is_empty() {
+        increment(counts, "UNKNOWN");
+        return;
+    }
+    for part in split_pipe(value) {
+        increment(counts, part);
+    }
 }
