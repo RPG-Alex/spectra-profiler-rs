@@ -14,8 +14,7 @@ categories = ["science", "command-line-utilities"]
 csv = "1.4.0"
 mascot-rs = {git = "https://github.com/earth-metabolome-initiative/mascot-rs"}
 molecular-formulas = "0.2.0"
-plotters = "0.3.7"
-plotters-svg = "0.3.7"
+plotters = { version = "0.3", default-features = false, features = ["svg_backend"] }
 serde = "1.0.228"
 tempfile = "3.27.0"
 tokio = {version = "1.52.3", features = ["macros", "rt-multi-thread"]}

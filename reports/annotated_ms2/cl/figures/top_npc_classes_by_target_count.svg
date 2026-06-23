@@ -6,7 +6,7 @@ Cl by NPC classes: Top groups by target count
 <text x="840" y="875" dy="-0.5ex" text-anchor="middle" font-family="sans-serif" font-size="9.67741935483871" opacity="1" fill="#000000">
 Target-positive spectra
 </text>
-<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="304,59 304,814 "/>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="304,60 304,814 "/>
 <text x="295" y="814" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="14.516129032258064" opacity="1" fill="#000000">
 Pyrrolidine alkaloids
 </text>
@@ -19,10 +19,10 @@ Benzodiazepine alkaloids
 Phenylethylamines
 </text>
 <polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="299,714 304,714 "/>
-<text x="295" y="663" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="14.516129032258064" opacity="1" fill="#000000">
+<text x="295" y="664" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="14.516129032258064" opacity="1" fill="#000000">
 Phenylalanine-derived alkaloids
 </text>
-<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="299,663 304,663 "/>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="299,664 304,664 "/>
 <text x="295" y="613" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="14.516129032258064" opacity="1" fill="#000000">
 Purine alkaloids
 </text>
@@ -31,46 +31,46 @@ Purine alkaloids
 Chalcones
 </text>
 <polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="299,563 304,563 "/>
-<text x="295" y="512" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="14.516129032258064" opacity="1" fill="#000000">
+<text x="295" y="513" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="14.516129032258064" opacity="1" fill="#000000">
 Quinoline alkaloids
 </text>
-<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="299,512 304,512 "/>
-<text x="295" y="462" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="14.516129032258064" opacity="1" fill="#000000">
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="299,513 304,513 "/>
+<text x="295" y="463" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="14.516129032258064" opacity="1" fill="#000000">
 Quinazoline alkaloids
 </text>
-<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="299,462 304,462 "/>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="299,463 304,463 "/>
 <text x="295" y="412" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="14.516129032258064" opacity="1" fill="#000000">
 Simple indole alkaloids
 </text>
 <polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="299,412 304,412 "/>
-<text x="295" y="361" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="14.516129032258064" opacity="1" fill="#000000">
+<text x="295" y="362" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="14.516129032258064" opacity="1" fill="#000000">
 Aminoacids
 </text>
-<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="299,361 304,361 "/>
-<text x="295" y="311" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="14.516129032258064" opacity="1" fill="#000000">
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="299,362 304,362 "/>
+<text x="295" y="312" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="14.516129032258064" opacity="1" fill="#000000">
 Imidazole alkaloids
 </text>
-<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="299,311 304,311 "/>
-<text x="295" y="261" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="14.516129032258064" opacity="1" fill="#000000">
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="299,312 304,312 "/>
+<text x="295" y="262" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="14.516129032258064" opacity="1" fill="#000000">
 Piperidine alkaloids
 </text>
-<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="299,261 304,261 "/>
-<text x="295" y="210" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="14.516129032258064" opacity="1" fill="#000000">
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="299,262 304,262 "/>
+<text x="295" y="211" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="14.516129032258064" opacity="1" fill="#000000">
 Isoquinoline alkaloids
 </text>
-<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="299,210 304,210 "/>
-<text x="295" y="160" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="14.516129032258064" opacity="1" fill="#000000">
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="299,211 304,211 "/>
+<text x="295" y="161" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="14.516129032258064" opacity="1" fill="#000000">
 Carboline alkaloids
 </text>
-<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="299,160 304,160 "/>
-<text x="295" y="110" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="14.516129032258064" opacity="1" fill="#000000">
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="299,161 304,161 "/>
+<text x="295" y="111" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="14.516129032258064" opacity="1" fill="#000000">
 Pyridine alkaloids
 </text>
-<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="299,110 304,110 "/>
-<text x="295" y="59" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="14.516129032258064" opacity="1" fill="#000000">
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="299,111 304,111 "/>
+<text x="295" y="60" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="14.516129032258064" opacity="1" fill="#000000">
 
 </text>
-<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="299,59 304,59 "/>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="299,60 304,60 "/>
 <polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="305,815 1374,815 "/>
 <text x="305" y="825" dy="0.76em" text-anchor="middle" font-family="sans-serif" font-size="9.67741935483871" opacity="1" fill="#000000">
 0.0
@@ -112,56 +112,56 @@ Pyridine alkaloids
 <text x="375" y="764" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
 452 (33.93%)
 </text>
-<rect x="305" y="663" width="81" height="51" opacity="0.6" fill="#0000FF" stroke="none"/>
+<rect x="305" y="664" width="81" height="50" opacity="0.6" fill="#0000FF" stroke="none"/>
 <text x="395" y="714" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
 599 (11.13%)
 </text>
-<rect x="305" y="613" width="81" height="50" opacity="0.6" fill="#0000FF" stroke="none"/>
-<text x="396" y="663" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
+<rect x="305" y="613" width="81" height="51" opacity="0.6" fill="#0000FF" stroke="none"/>
+<text x="396" y="664" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
 600 (11.76%)
 </text>
 <rect x="305" y="563" width="86" height="50" opacity="0.6" fill="#0000FF" stroke="none"/>
 <text x="401" y="613" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
 638 (9.05%)
 </text>
-<rect x="305" y="512" width="87" height="51" opacity="0.6" fill="#0000FF" stroke="none"/>
+<rect x="305" y="513" width="87" height="50" opacity="0.6" fill="#0000FF" stroke="none"/>
 <text x="401" y="563" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
 639 (12.31%)
 </text>
-<rect x="305" y="462" width="94" height="50" opacity="0.6" fill="#0000FF" stroke="none"/>
-<text x="408" y="512" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
+<rect x="305" y="463" width="94" height="50" opacity="0.6" fill="#0000FF" stroke="none"/>
+<text x="408" y="513" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
 695 (10.49%)
 </text>
-<rect x="305" y="412" width="111" height="50" opacity="0.6" fill="#0000FF" stroke="none"/>
-<text x="426" y="462" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
+<rect x="305" y="412" width="111" height="51" opacity="0.6" fill="#0000FF" stroke="none"/>
+<text x="426" y="463" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
 821 (12.57%)
 </text>
-<rect x="305" y="361" width="114" height="51" opacity="0.6" fill="#0000FF" stroke="none"/>
+<rect x="305" y="362" width="114" height="50" opacity="0.6" fill="#0000FF" stroke="none"/>
 <text x="429" y="412" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
 843 (11.00%)
 </text>
-<rect x="305" y="311" width="116" height="50" opacity="0.6" fill="#0000FF" stroke="none"/>
-<text x="430" y="361" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
+<rect x="305" y="312" width="116" height="50" opacity="0.6" fill="#0000FF" stroke="none"/>
+<text x="430" y="362" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
 852 (6.64%)
 </text>
-<rect x="305" y="261" width="121" height="50" opacity="0.6" fill="#0000FF" stroke="none"/>
-<text x="435" y="311" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
+<rect x="305" y="262" width="121" height="50" opacity="0.6" fill="#0000FF" stroke="none"/>
+<text x="435" y="312" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
 889 (16.94%)
 </text>
-<rect x="305" y="210" width="158" height="51" opacity="0.6" fill="#0000FF" stroke="none"/>
-<text x="472" y="261" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
+<rect x="305" y="211" width="158" height="51" opacity="0.6" fill="#0000FF" stroke="none"/>
+<text x="472" y="262" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
 1161 (6.04%)
 </text>
-<rect x="305" y="160" width="197" height="50" opacity="0.6" fill="#0000FF" stroke="none"/>
-<text x="512" y="210" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
+<rect x="305" y="161" width="197" height="50" opacity="0.6" fill="#0000FF" stroke="none"/>
+<text x="512" y="211" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
 1452 (11.38%)
 </text>
-<rect x="305" y="110" width="417" height="50" opacity="0.6" fill="#0000FF" stroke="none"/>
-<text x="731" y="160" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
+<rect x="305" y="111" width="417" height="50" opacity="0.6" fill="#0000FF" stroke="none"/>
+<text x="731" y="161" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
 3062 (13.18%)
 </text>
-<rect x="305" y="59" width="929" height="51" opacity="0.6" fill="#0000FF" stroke="none"/>
-<text x="1243" y="110" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
+<rect x="305" y="60" width="929" height="51" opacity="0.6" fill="#0000FF" stroke="none"/>
+<text x="1243" y="111" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
 6823 (10.90%)
 </text>
 </svg>
