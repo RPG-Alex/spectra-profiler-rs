@@ -1,5 +1,7 @@
-use std::fs;
-use std::path::{Path, PathBuf};
+use std::{
+    fs,
+    path::{Path, PathBuf},
+};
 
 #[derive(Debug, Clone)]
 pub struct ReportPaths {
@@ -17,11 +19,7 @@ impl ReportPaths {
         fs::create_dir_all(&tables)?;
         fs::create_dir_all(&figures)?;
 
-        Ok(Self {
-            root,
-            tables,
-            figures,
-        })
+        Ok(Self { root, tables, figures })
     }
 
     pub fn table(&self, filename: &str) -> PathBuf {
@@ -34,5 +32,34 @@ impl ReportPaths {
 
     pub fn readme(&self) -> PathBuf {
         self.root.join("README.md")
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn prepares_report_directories() {
+        let temp_dir = tempfile::tempdir().unwrap();
+        let root = temp_dir.path().join("reports").join("annotated_ms2").join("f");
+
+        let reports = ReportPaths::prepare(&root).unwrap();
+
+        assert_eq!(reports.root, root);
+        assert!(reports.tables.exists());
+        assert!(reports.figures.exists());
+    }
+
+    #[test]
+    fn builds_table_figure_and_readme_paths() {
+        let temp_dir = tempfile::tempdir().unwrap();
+        let reports = ReportPaths::prepare(temp_dir.path().join("report")).unwrap();
+
+        assert_eq!(reports.table("summary.csv"), reports.tables.join("summary.csv"));
+
+        assert_eq!(reports.figure("plot.svg"), reports.figures.join("plot.svg"));
+
+        assert_eq!(reports.readme(), reports.root.join("README.md"));
     }
 }

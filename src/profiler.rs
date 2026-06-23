@@ -1,13 +1,15 @@
 use mascot_rs::prelude::*;
 
-use crate::chemistry::contains_element;
-use crate::metadata::metadata_value;
-use crate::population::{
-    PopulationMap, increment_pipe_population, increment_population, summarize_population_map,
-    write_population_map_csv,
+use crate::{
+    chemistry::contains_element,
+    metadata::{metadata_value, optional_debug_label},
+    population::{
+        PopulationMap, increment_pipe_population, increment_population, summarize_population_map,
+        write_population_map_csv,
+    },
+    reports::ReportPaths,
+    visuals::write_standard_population_figures,
 };
-use crate::reports::ReportPaths;
-use crate::visuals::write_standard_population_figures;
 
 pub fn profile_dataset(
     spectra: &MGFVec<f64>,
@@ -39,13 +41,10 @@ pub fn profile_dataset(
         let npc_classes = metadata_value(metadata, "NPC_CLASSES");
         let library_quality = metadata_value(metadata, "LIBRARYQUALITY");
 
-        let ion_mode = option_debug_value(record.ion_mode());
-        let source_instrument = option_debug_value(record.source_instrument());
+        let ion_mode = optional_debug_label(record.ion_mode());
+        let source_instrument = optional_debug_label(record.source_instrument());
 
-        let formula = metadata
-            .formula()
-            .map(ToString::to_string)
-            .unwrap_or_default();
+        let formula = metadata.formula().map(ToString::to_string).unwrap_or_default();
 
         if !formula.is_empty() {
             records_with_formula += 1;
@@ -65,11 +64,7 @@ pub fn profile_dataset(
         );
         increment_pipe_population(&mut by_npc_classes, &npc_classes, contains_target_element);
 
-        increment_population(
-            &mut by_source_dataset,
-            &source_dataset,
-            contains_target_element,
-        );
+        increment_population(&mut by_source_dataset, &source_dataset, contains_target_element);
         increment_population(&mut by_organism, &organism, contains_target_element);
         increment_population(&mut by_ion_mode, &ion_mode, contains_target_element);
         increment_population(
@@ -77,11 +72,7 @@ pub fn profile_dataset(
             &source_instrument,
             contains_target_element,
         );
-        increment_population(
-            &mut by_library_quality,
-            &library_quality,
-            contains_target_element,
-        );
+        increment_population(&mut by_library_quality, &library_quality, contains_target_element);
     }
 
     write_summary_csv(
@@ -95,7 +86,7 @@ pub fn profile_dataset(
     write_population_outputs(
         reports,
         "npc_pathways",
-        &format!("{} by NPC pathways", target_element),
+        &format!("{target_element} by NPC pathways"),
         &by_npc_pathways,
         total_records,
         records_with_target_element,
@@ -104,7 +95,7 @@ pub fn profile_dataset(
     write_population_outputs(
         reports,
         "npc_superclasses",
-        &format!("{} by NPC superclasses", target_element),
+        &format!("{target_element} by NPC superclasses"),
         &by_npc_superclasses,
         total_records,
         records_with_target_element,
@@ -113,7 +104,7 @@ pub fn profile_dataset(
     write_population_outputs(
         reports,
         "npc_classes",
-        &format!("{} by NPC classes", target_element),
+        &format!("{target_element} by NPC classes"),
         &by_npc_classes,
         total_records,
         records_with_target_element,
@@ -122,7 +113,7 @@ pub fn profile_dataset(
     write_population_outputs(
         reports,
         "source_dataset",
-        &format!("{} by source dataset", target_element),
+        &format!("{target_element} by source dataset"),
         &by_source_dataset,
         total_records,
         records_with_target_element,
@@ -131,7 +122,7 @@ pub fn profile_dataset(
     write_population_outputs(
         reports,
         "organism",
-        &format!("{} by organism", target_element),
+        &format!("{target_element} by organism"),
         &by_organism,
         total_records,
         records_with_target_element,
@@ -140,7 +131,7 @@ pub fn profile_dataset(
     write_population_outputs(
         reports,
         "ion_mode",
-        &format!("{} by ion mode", target_element),
+        &format!("{target_element} by ion mode"),
         &by_ion_mode,
         total_records,
         records_with_target_element,
@@ -149,7 +140,7 @@ pub fn profile_dataset(
     write_population_outputs(
         reports,
         "source_instrument",
-        &format!("{} by source instrument", target_element),
+        &format!("{target_element} by source instrument"),
         &by_source_instrument,
         total_records,
         records_with_target_element,
@@ -158,7 +149,7 @@ pub fn profile_dataset(
     write_population_outputs(
         reports,
         "library_quality",
-        &format!("{} by library quality", target_element),
+        &format!("{target_element} by library quality"),
         &by_library_quality,
         total_records,
         records_with_target_element,
@@ -166,10 +157,7 @@ pub fn profile_dataset(
 
     println!("Total records: {total_records}");
     println!("Records with formula: {records_with_formula}");
-    println!(
-        "Records with {}: {records_with_target_element}",
-        target_element
-    );
+    println!("Records with {target_element}: {records_with_target_element}");
 
     Ok(())
 }
@@ -208,10 +196,7 @@ fn write_summary_csv(
     writer.write_record(["metric", "value"])?;
     writer.write_record(["target_element".to_string(), target_element.to_string()])?;
     writer.write_record(["total_records".to_string(), total_records.to_string()])?;
-    writer.write_record([
-        "records_with_formula".to_string(),
-        records_with_formula.to_string(),
-    ])?;
+    writer.write_record(["records_with_formula".to_string(), records_with_formula.to_string()])?;
     writer.write_record([
         "records_with_target_element".to_string(),
         records_with_target_element.to_string(),
@@ -221,8 +206,24 @@ fn write_summary_csv(
     Ok(())
 }
 
-fn option_debug_value<T: std::fmt::Debug>(value: Option<T>) -> String {
-    value
-        .map(|inner| format!("{inner:?}"))
-        .unwrap_or_else(|| "UNKNOWN".to_string())
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::reports::ReportPaths;
+
+    #[test]
+    fn write_summary_csv_writes_expected_metrics() {
+        let temp_dir = tempfile::tempdir().unwrap();
+        let reports = ReportPaths::prepare(temp_dir.path().join("report")).unwrap();
+
+        write_summary_csv(&reports, 100, 95, 12, "F").unwrap();
+
+        let contents = std::fs::read_to_string(reports.table("summary.csv")).unwrap();
+
+        assert!(contents.contains("metric,value"));
+        assert!(contents.contains("target_element,F"));
+        assert!(contents.contains("total_records,100"));
+        assert!(contents.contains("records_with_formula,95"));
+        assert!(contents.contains("records_with_target_element,12"));
+    }
 }

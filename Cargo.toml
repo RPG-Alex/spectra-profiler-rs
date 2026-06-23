@@ -2,6 +2,13 @@
 name = "spectra-profiler-rs"
 version = "0.1.0"
 edition = "2024"
+authors = ["rpg-alex"]
+description = "Rust tooling for profiling annotated MS/MS spectral datasets before machine-learning workflows"
+license = "MIT"
+repository = "https://github.com/rpg-alex/spectra-profiler-rs"
+readme = "README.md"
+keywords = ["mass-spectrometry", "metabolomics", "machine-learning", "rust"]
+categories = ["science", "command-line-utilities"]
 
 [dependencies]
 csv = "1.4.0"
@@ -10,4 +17,28 @@ molecular-formulas = "0.2.0"
 plotters = "0.3.7"
 plotters-svg = "0.3.7"
 serde = "1.0.228"
+tempfile = "3.27.0"
 tokio = {version = "1.52.3", features = ["macros", "rt-multi-thread"]}
+
+[lints.rust]
+unused_macro_rules = "forbid"
+unconditional_recursion = "forbid"
+unreachable_patterns = "forbid"
+unused_import_braces = "forbid"
+unused_must_use = "forbid"
+deprecated = "deny"
+
+[lints.rustdoc]
+broken_intra_doc_links = "forbid"
+bare_urls = "forbid"
+invalid_codeblock_attributes = "forbid"
+invalid_html_tags = "forbid"
+
+[lints.clippy]
+clone_on_copy = "forbid"
+duplicated_attributes = "forbid"
+uninlined_format_args = "deny"
+wildcard_imports = "deny"
+manual_let_else = "deny"
+match_same_arms = "deny"
+needless_pass_by_value = "deny"

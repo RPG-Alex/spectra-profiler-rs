@@ -1,5 +1,4 @@
-use std::fs::File;
-use std::io::Write;
+use std::{fs::File, io::Write};
 
 use crate::reports::ReportPaths;
 
@@ -60,17 +59,12 @@ pub fn write_markdown_report(
 ) -> std::result::Result<(), Box<dyn std::error::Error>> {
     let mut file = File::create(reports.readme())?;
 
-    writeln!(
-        file,
-        "# `{}` profile for `{}`",
-        target_element, dataset_name
-    )?;
+    writeln!(file, "# `{target_element}` profile for `{dataset_name}`")?;
 
     writeln!(file)?;
     writeln!(
         file,
-        "This report summarizes how often the target element `{}` appears across metadata groups in `{}`.",
-        target_element, dataset_name
+        "This report summarizes how often the target element `{target_element}` appears across metadata groups in `{dataset_name}`.",
     )?;
 
     writeln!(file)?;
@@ -138,4 +132,25 @@ fn write_section(
     writeln!(file, "</table>")?;
 
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::reports::ReportPaths;
+
+    #[test]
+    fn writes_markdown_report() {
+        let temp_dir = tempfile::tempdir().unwrap();
+        let reports = ReportPaths::prepare(temp_dir.path().join("f")).unwrap();
+
+        write_markdown_report("annotated_ms2", "F", &reports).unwrap();
+
+        let contents = std::fs::read_to_string(reports.readme()).unwrap();
+
+        assert!(contents.contains("# `F` profile for `annotated_ms2`"));
+        assert!(contents.contains("tables/summary.csv"));
+        assert!(contents.contains("figures/top_npc_classes_by_target_count.svg"));
+        assert!(contents.contains("figures/top_npc_classes_by_percent_target.svg"));
+    }
 }

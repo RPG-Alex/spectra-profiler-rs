@@ -1869,6 +1869,7 @@ dependencies = [
  "plotters",
  "plotters-svg",
  "serde",
+ "tempfile",
  "tokio",
 ]
 

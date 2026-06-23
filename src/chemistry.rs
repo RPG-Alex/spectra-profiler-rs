@@ -47,3 +47,58 @@ fn formula_symbols(formula: &str) -> impl Iterator<Item = String> + '_ {
         None
     })
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn normalizes_element_symbols() {
+        assert_eq!(normalize_element_symbol("f"), Some("F".to_string()));
+        assert_eq!(normalize_element_symbol("F"), Some("F".to_string()));
+        assert_eq!(normalize_element_symbol("cl"), Some("Cl".to_string()));
+        assert_eq!(normalize_element_symbol("CL"), Some("Cl".to_string()));
+        assert_eq!(normalize_element_symbol(" br "), Some("Br".to_string()));
+    }
+
+    #[test]
+    fn rejects_empty_element_symbols() {
+        assert_eq!(normalize_element_symbol(""), None);
+        assert_eq!(normalize_element_symbol("   "), None);
+    }
+
+    #[test]
+    fn detects_single_letter_elements() {
+        assert!(contains_element("C6H6F", "F"));
+        assert!(contains_element("C20H25IN2O5", "I"));
+        assert!(contains_element("C10H14N2", "N"));
+    }
+
+    #[test]
+    fn detects_two_letter_elements() {
+        assert!(contains_element("C6H5Cl", "Cl"));
+        assert!(contains_element("C6H5Br", "Br"));
+        assert!(contains_element("C6H5Na", "Na"));
+    }
+
+    #[test]
+    fn does_not_match_substrings_inside_other_elements() {
+        assert!(!contains_element("C6H5Fe", "F"));
+        assert!(!contains_element("C6H5Si", "I"));
+        assert!(!contains_element("NaCl", "N"));
+        assert!(!contains_element("NaCl", "C"));
+    }
+
+    #[test]
+    fn extracts_unique_elements_from_formula() {
+        let symbols = element_symbols_in_formula("C6H5ClBrNO2");
+
+        assert!(symbols.contains("C"));
+        assert!(symbols.contains("H"));
+        assert!(symbols.contains("Cl"));
+        assert!(symbols.contains("Br"));
+        assert!(symbols.contains("N"));
+        assert!(symbols.contains("O"));
+        assert_eq!(symbols.len(), 6);
+    }
+}
