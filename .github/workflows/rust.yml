@@ -1,0 +1,100 @@
+name: Rust CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_call:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  fmt:
+    name: Rustfmt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+      - name: Check formatting
+        run: cargo fmt --all -- --check
+
+  clippy:
+    name: Clippy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+      - name: Cache Rust builds
+        uses: Swatinem/rust-cache@v2
+      - name: Run clippy
+        run: cargo clippy --all-targets -- -D warnings
+
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+      - name: Cache Rust builds
+        uses: Swatinem/rust-cache@v2
+      - name: Build
+        run: cargo build --verbose
+      - name: Run tests
+        run: cargo test --verbose
+
+  doc:
+    name: Documentation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+      - name: Cache Rust builds
+        uses: Swatinem/rust-cache@v2
+      - name: Check documentation
+        run: cargo doc --no-deps --document-private-items
+        env:
+          RUSTDOCFLAGS: -D warnings
+
+  repository-hygiene:
+    name: Repository Hygiene
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Reject cache and huge row dumps
+        run: |
+          set -euo pipefail
+
+          forbidden="$(git ls-files 'cache/**' '**/metadata_rows.csv')"
+
+          if [ -n "$forbidden" ]; then
+            echo "::error::Forbidden generated/cache files are committed:"
+            echo "$forbidden"
+            exit 1
+          fi
+
+          echo "No forbidden generated/cache files found."
+
+      - name: Reject Python notebooks/scripts
+        run: |
+          set -euo pipefail
+
+          matches="$(git ls-files '*.py' '*.pyw' '*.pyi' '*.ipynb')"
+
+          if [ -n "$matches" ]; then
+            echo "::error::Python files are not allowed in this repository:"
+            echo "$matches"
+            exit 1
+          fi
+
+          echo "No Python files found."

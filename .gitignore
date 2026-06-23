@@ -24,10 +24,13 @@ target
 # Added by cargo
 
 /target
-/data
-/reports
+/cache
+**/metadata_rows.csv
 # Added by cargo
 #
 # already existing elements were commented out
 
 #/target
+
+.vscode
+/.vscode
