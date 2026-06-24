@@ -47,7 +47,13 @@ struct ConditionalProbabilityRow {
 }
 
 /// Writes dataset-level element co-occurrence reports.
-pub fn write_cooccurrence_reports(spectra: &MGFVec<f64>, reports: &ReportPaths) -> Result<()> {
+pub fn write_cooccurrence_reports(
+    dataset_name: &str,
+    spectra: &MGFVec<f64>,
+    reports: &ReportPaths,
+    dataset_reports_root: impl AsRef<Path>,
+    reported_elements: &[String],
+) -> Result<()> {
     let profile = CooccurrenceProfile::from_spectra(spectra);
     let heatmap_elements = profile.heatmap_elements();
 
@@ -68,6 +74,14 @@ pub fn write_cooccurrence_reports(spectra: &MGFVec<f64>, reports: &ReportPaths) 
     )?;
 
     write_cooccurrence_readme(reports, &profile, &heatmap_elements)?;
+
+    write_dataset_index_readme(
+        dataset_name,
+        dataset_reports_root,
+        &profile,
+        &heatmap_elements,
+        reported_elements,
+    )?;
 
     Ok(())
 }
@@ -398,8 +412,7 @@ fn write_cooccurrence_readme(
     writeln!(file)?;
     writeln!(
         file,
-        "This report summarizes which chemical elements appear together in molecular formulas \
-         across the dataset."
+        "This report summarizes which chemical elements appear together in molecular formulas across the dataset."
     )?;
     writeln!(file)?;
     writeln!(file, "## Summary")?;
@@ -411,28 +424,6 @@ fn write_cooccurrence_readme(
     writeln!(file, "| Observed elements | {} |", profile.element_counts.len())?;
     writeln!(file)?;
     writeln!(file, "Heatmap elements shown: `{}`.", heatmap_elements.join("`, `"))?;
-    writeln!(file)?;
-    writeln!(file, "## How to read this report")?;
-    writeln!(file)?;
-    writeln!(
-        file,
-        "- **Raw co-occurrence count** counts how many formulas contain both the row element and \
-         the column element."
-    )?;
-    writeln!(
-        file,
-        "- **Conditional probability** reads row-wise: `P(column element | row element)`."
-    )?;
-    writeln!(
-        file,
-        "- The diagonal shows how often each element appears with itself, which is equivalent \
-         to that element's presence count."
-    )?;
-    writeln!(
-        file,
-        "- Raw-count colors are log-scaled so that common elements like carbon, hydrogen, \
-         oxygen, and nitrogen do not flatten the rest of the plot."
-    )?;
     writeln!(file)?;
     writeln!(file, "## Tables")?;
     writeln!(file)?;
@@ -475,6 +466,109 @@ fn heatmap_cell_size(element_count: usize) -> i32 {
 
 fn heatmap_font_size(cell_size: i32, scale: f64, min: i32, max: i32) -> i32 {
     ((cell_size as f64 * scale).round() as i32).clamp(min, max)
+}
+
+fn write_dataset_index_readme(
+    dataset_name: &str,
+    dataset_reports_root: impl AsRef<Path>,
+    profile: &CooccurrenceProfile,
+    observed_elements: &[String],
+    reported_elements: &[String],
+) -> Result<()> {
+    let readme_path = dataset_reports_root.as_ref().join("README.md");
+    let mut file = File::create(readme_path)?;
+
+    writeln!(file, "# `{dataset_name}` profiling reports")?;
+    writeln!(file)?;
+    writeln!(
+        file,
+        "This directory contains generated exploratory profiling reports for `{dataset_name}`."
+    )?;
+    writeln!(file)?;
+    writeln!(
+        file,
+        "The reports summarize element presence from molecular formula metadata and should be \
+         interpreted as dataset profiling, not direct spectral evidence."
+    )?;
+
+    writeln!(file)?;
+    writeln!(file, "## Dataset facts")?;
+    writeln!(file)?;
+    writeln!(file, "| Metric | Value |")?;
+    writeln!(file, "|---|---:|")?;
+    writeln!(file, "| Total spectra | {} |", profile.total_records)?;
+    writeln!(file, "| Spectra with formula metadata | {} |", profile.records_with_formula)?;
+    writeln!(
+        file,
+        "| Spectra without formula metadata | {} |",
+        profile.total_records.saturating_sub(profile.records_with_formula)
+    )?;
+    writeln!(file, "| Observed elements | {} |", profile.element_counts.len())?;
+
+    writeln!(file)?;
+    writeln!(file, "## Dataset-level reports")?;
+    writeln!(file)?;
+    writeln!(
+        file,
+        "- [Element co-occurrence profile](cooccurrence/README.md) — raw and normalized atom co-occurrence heatmaps."
+    )?;
+
+    writeln!(file)?;
+    writeln!(file, "## Observed elements")?;
+    writeln!(file)?;
+    writeln!(
+        file,
+        "The following valid chemical elements were observed in molecular formula metadata, \
+         ordered by descending frequency."
+    )?;
+    writeln!(file)?;
+    writeln!(file, "`{}`", observed_elements.join("`, `"))?;
+
+    writeln!(file)?;
+    writeln!(file, "## Top observed elements")?;
+    writeln!(file)?;
+    writeln!(file, "| Element | Formula count | % of formula-bearing spectra |")?;
+    writeln!(file, "|---|---:|---:|")?;
+
+    for element in observed_elements.iter().take(20) {
+        let count = profile.element_count(element);
+        let percent_of_formula_records = percent(count, profile.records_with_formula);
+
+        writeln!(file, "| `{element}` | {count} | {percent_of_formula_records:.2}% |")?;
+    }
+
+    writeln!(file)?;
+    writeln!(file, "## Element reports generated in this run")?;
+    writeln!(file)?;
+    writeln!(
+        file,
+        "Each element report summarizes metadata groups for spectra whose formulas contain that element."
+    )?;
+    writeln!(file)?;
+    writeln!(file, "| Element | Formula count | % of formula-bearing spectra | Report |")?;
+    writeln!(file, "|---|---:|---:|---|")?;
+
+    let mut report_rows = reported_elements
+        .iter()
+        .map(|element| {
+            let count = profile.element_count(element);
+            (element, count)
+        })
+        .collect::<Vec<_>>();
+
+    report_rows.sort_by(|left, right| right.1.cmp(&left.1).then_with(|| left.0.cmp(right.0)));
+
+    for (element, count) in report_rows {
+        let percent_of_formula_records = percent(count, profile.records_with_formula);
+        let report_dir = element.to_ascii_lowercase();
+
+        writeln!(
+            file,
+            "| `{element}` | {count} | {percent_of_formula_records:.2}% | [Open](./{report_dir}/README.md) |"
+        )?;
+    }
+
+    Ok(())
 }
 
 #[cfg(test)]

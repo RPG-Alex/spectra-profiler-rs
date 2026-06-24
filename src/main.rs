@@ -19,7 +19,7 @@ use datasets::load_dataset;
 use markdown::write_markdown_report;
 use mascot_rs::prelude::*;
 use profiler::profile_dataset;
-use reports::ReportPaths;
+use reports::{ReportPaths, write_reports_index};
 
 use crate::error::Result;
 
@@ -33,6 +33,13 @@ async fn main() -> Result<()> {
 
     println!("Loaded {} spectra", spectra.len());
 
+    let target_elements = match &config.target_selection {
+        TargetSelection::One(target_element) => vec![target_element.clone()],
+        TargetSelection::AllObserved => observed_elements(&spectra),
+    };
+
+    println!("Target elements: {}", target_elements.join(", "));
+
     let cooccurrence_report_paths = ReportPaths::prepare(config.reports_root.join("cooccurrence"))?;
 
     println!(
@@ -40,14 +47,13 @@ async fn main() -> Result<()> {
         cooccurrence_report_paths.root.display()
     );
 
-    write_cooccurrence_reports(&spectra, &cooccurrence_report_paths)?;
-
-    let target_elements = match &config.target_selection {
-        TargetSelection::One(target_element) => vec![target_element.clone()],
-        TargetSelection::AllObserved => observed_elements(&spectra),
-    };
-
-    println!("Target elements: {}", target_elements.join(", "));
+    write_cooccurrence_reports(
+        &config.dataset_name,
+        &spectra,
+        &cooccurrence_report_paths,
+        &config.reports_root,
+        &target_elements,
+    )?;
 
     for target_element in target_elements {
         let report_dir = config.report_dir_for(&target_element);
@@ -62,6 +68,10 @@ async fn main() -> Result<()> {
 
         println!("Wrote reports to {}", report_paths.root.display());
     }
+
+    write_reports_index("reports", "REPORTS.md")?;
+
+    println!("Updated REPORTS.md");
 
     Ok(())
 }

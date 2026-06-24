@@ -58,6 +58,11 @@ writes to:
 ```text
 reports/example/f/
 ```
+# Reports
+
+## Generated reports
+
+After running the profiler, open [`REPORTS.md`](REPORTS.md) for links to generated dataset reports.
 
 ## Report output
 

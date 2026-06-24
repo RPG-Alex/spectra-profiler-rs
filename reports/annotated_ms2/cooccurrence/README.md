@@ -12,13 +12,6 @@ This report summarizes which chemical elements appear together in molecular form
 
 Heatmap elements shown: `C`, `H`, `O`, `N`, `S`, `F`, `Cl`, `P`, `Br`, `I`, `Na`, `B`, `K`, `Si`, `Se`, `As`, `Co`, `Fe`, `Mg`.
 
-## How to read this report
-
-- **Raw co-occurrence count** counts how many formulas contain both the row element and the column element.
-- **Conditional probability** reads row-wise: `P(column element | row element)`.
-- The diagonal shows how often each element appears with itself, which is equivalent to that element's presence count.
-- Raw-count colors are log-scaled so that common elements like carbon, hydrogen, oxygen, and nitrogen do not flatten the rest of the plot.
-
 ## Tables
 
 - [Element counts](tables/element_counts.csv)
