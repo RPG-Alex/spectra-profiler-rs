@@ -2,16 +2,20 @@ use std::path::Path;
 
 use mascot_rs::prelude::*;
 
-use crate::config::DatasetSource;
+use crate::{
+    config::DatasetSource,
+    error::{Result, SpectraProfilerError},
+};
 
-pub async fn load_dataset(
-    source: &DatasetSource,
-    cache_dir: &Path,
-) -> std::result::Result<MGFVec<f64>, Box<dyn std::error::Error>> {
+pub async fn load_dataset(source: &DatasetSource, cache_dir: &Path) -> Result<MGFVec<f64>> {
     match source {
         DatasetSource::AnnotatedMs2 => {
-            let loaded =
-                MGFVec::<f64>::annotated_ms2().target_directory(cache_dir).verbose().load().await?;
+            let loaded = MGFVec::<f64>::annotated_ms2()
+                .target_directory(cache_dir)
+                .verbose()
+                .load()
+                .await
+                .map_err(|source| SpectraProfilerError::DatasetLoad { source: source.into() })?;
 
             println!("Skipped {} malformed records", loaded.skipped_records());
             println!("Dataset path: {}", loaded.path().display());
@@ -20,7 +24,9 @@ pub async fn load_dataset(
         }
 
         DatasetSource::LocalMgf(path) => {
-            let spectra = MGFVec::<f64>::from_path(path)?;
+            let spectra = MGFVec::<f64>::from_path(path)
+                .map_err(|source| SpectraProfilerError::DatasetLoad { source: source.into() })?;
+
             Ok(spectra)
         }
     }

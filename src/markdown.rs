@@ -176,42 +176,42 @@ const REPORT_SECTIONS: &[ReportSection] = &[
     ReportSection {
         stem: "npc_pathways",
         title: "NPC pathways",
-        description: "Natural-product pathway-level distribution for the target element.",
+        description: "Groups spectra by broad natural-product pathway annotations.",
     },
     ReportSection {
         stem: "npc_superclasses",
         title: "NPC superclasses",
-        description: "Natural-product superclass-level distribution for the target element.",
+        description: "Groups spectra by intermediate natural-product superclass annotations.",
     },
     ReportSection {
         stem: "npc_classes",
         title: "NPC classes",
-        description: "Natural-product class-level distribution for the target element.",
+        description: "Groups spectra by more specific natural-product class annotations.",
     },
     ReportSection {
         stem: "source_dataset",
         title: "Source dataset",
-        description: "Distribution by original source dataset.",
+        description: "Groups spectra by the dataset or spectral-library source recorded in metadata.",
     },
     ReportSection {
         stem: "organism",
         title: "Organism",
-        description: "Distribution by organism/source organism metadata.",
+        description: "Groups spectra by organism or source-organism metadata when available.",
     },
     ReportSection {
         stem: "ion_mode",
         title: "Ion mode",
-        description: "Distribution by recorded ion mode.",
+        description: "Groups spectra by recorded ionization mode, such as positive or negative mode.",
     },
     ReportSection {
         stem: "source_instrument",
         title: "Source instrument",
-        description: "Distribution by recorded source instrument.",
+        description: "Groups spectra by the instrument metadata associated with the source record.",
     },
     ReportSection {
         stem: "library_quality",
         title: "Library quality",
-        description: "Distribution by library quality metadata.",
+        description: "Groups spectra by the recorded quality label from the source library metadata.",
     },
 ];
 
@@ -234,6 +234,8 @@ pub fn write_markdown_report(
 
     writeln!(file)?;
 
+    write_interpretation_guide(&mut file, target_element)?;
+    write_glossary_and_references(&mut file)?;
     write_numeric_summary(&mut file, &summary.numeric)?;
     write_top_enriched_groups(&mut file, &summary.top_enriched_groups)?;
     write_warning_summary(&mut file, &summary.warning_summary)?;
@@ -321,8 +323,22 @@ fn write_top_enriched_groups(file: &mut File, groups: &[EnrichedGroupSummary]) -
     writeln!(file)?;
     writeln!(
         file,
-        "These are the most target-enriched metadata groups with at least \
-         `{TOP_ENRICHED_MIN_TOTAL_SUPPORT}` total spectra."
+        "This table compares **metadata groups** across all population-map tables. \
+         A metadata group is one field/value pair, such as `NPC classes = Carboline alkaloids` \
+         or `Ion mode = Positive`."
+    )?;
+    writeln!(file)?;
+    writeln!(
+        file,
+        "The table is sorted by **Positive %**, meaning the percentage of spectra inside that \
+         group whose formulas contain the target element. Only groups with at least \
+         `{TOP_ENRICHED_MIN_TOTAL_SUPPORT}` total spectra are included."
+    )?;
+    writeln!(file)?;
+    writeln!(
+        file,
+        "This table answers: **where is the target element unusually common?** \
+         It does not necessarily show the groups with the largest absolute number of positives."
     )?;
     writeln!(file)?;
 
@@ -354,6 +370,31 @@ fn write_warning_summary(file: &mut File, warnings: &[WarningSummary]) -> Result
     writeln!(file)?;
     writeln!(file, "## Low-support warning summary")?;
     writeln!(file)?;
+    writeln!(
+        file,
+        "This section summarizes warning flags from the population-map CSV tables. \
+         The `Count` column is the number of metadata-group rows with that warning, \
+         not the number of spectra."
+    )?;
+    writeln!(file)?;
+    writeln!(file, "Warning meanings:")?;
+    writeln!(file)?;
+    writeln!(file, "| Warning | Meaning |")?;
+    writeln!(file, "|---|---|")?;
+    writeln!(
+        file,
+        "| `LOW_TOTAL_SUPPORT` | The group has fewer than the minimum number of total spectra. |"
+    )?;
+    writeln!(
+        file,
+        "| `LOW_TARGET_SUPPORT` | The group has some target-positive spectra, but too few for confident interpretation. |"
+    )?;
+    writeln!(
+        file,
+        "| `NO_TARGET_POSITIVES` | The group has no spectra whose formulas contain the target element. |"
+    )?;
+
+    writeln!(file)?;
 
     if warnings.is_empty() {
         writeln!(file, "No low-support warnings were found in the population tables.")?;
@@ -366,6 +407,91 @@ fn write_warning_summary(file: &mut File, warnings: &[WarningSummary]) -> Result
     for warning in warnings {
         writeln!(file, "| `{}` | {} |", warning.warning, warning.count)?;
     }
+
+    Ok(())
+}
+
+fn write_interpretation_guide(file: &mut File, target_element: &str) -> Result<()> {
+    writeln!(file)?;
+    writeln!(file, "## How to interpret this report")?;
+    writeln!(file)?;
+    writeln!(
+        file,
+        "This report treats each spectrum as **positive** when its molecular formula contains \
+         the target element `{target_element}`. A spectrum is **negative** when its formula does \
+         not contain `{target_element}`."
+    )?;
+    writeln!(file)?;
+    writeln!(
+        file,
+        "A **metadata group** means one metadata field and one value inside that field. \
+         For example, in the `NPC classes` table, `Carboline alkaloids` is one group. \
+         In the `Ion mode` table, `Positive` is one group."
+    )?;
+    writeln!(file)?;
+    writeln!(
+        file,
+        "The profiler compares the target-positive spectra against these groups to show \
+         where the target element is common, rare, concentrated, or poorly supported."
+    )?;
+    writeln!(file)?;
+    writeln!(file, "Important caveats:")?;
+    writeln!(
+        file,
+        "- These reports are based on formula metadata, not direct spectral proof of the element."
+    )?;
+    writeln!(
+        file,
+        "- Some metadata fields can contain multiple pipe-separated values, so assignment counts \
+         can be larger than the number of spectra."
+    )?;
+    writeln!(
+        file,
+        "- Highly enriched small groups can be interesting, but they should not be overinterpreted \
+         without checking support counts."
+    )?;
+
+    Ok(())
+}
+
+fn write_glossary_and_references(file: &mut File) -> Result<()> {
+    writeln!(file)?;
+    writeln!(file, "## Glossary and external references")?;
+    writeln!(file)?;
+    writeln!(file, "| Term | Meaning in this report | Reference |")?;
+    writeln!(file, "|---|---|---|")?;
+    writeln!(
+        file,
+        "| Molecular formula | Formula metadata used to decide whether a spectrum is target-positive. | [PubChem glossary - Molecular Formula](https://pubchem.ncbi.nlm.nih.gov/docs/glossary#section=Molecular-Formula) |"
+    )?;
+    writeln!(
+        file,
+        "| Target-positive spectrum | A spectrum whose molecular formula contains the selected target element. | Local report definition |"
+    )?;
+    writeln!(
+        file,
+        "| Metadata group | A group formed from one metadata field and one value, such as `NPC classes = Carboline alkaloids`. | Local report definition |"
+    )?;
+    writeln!(
+        file,
+        "| NPC pathways / superclasses / classes | Natural-product classification fields from NPClassifier-style annotations. | [NPClassifier](https://npclassifier.ucsd.edu/) |"
+    )?;
+    writeln!(
+        file,
+        "| ClassyFire taxonomy | Chemical taxonomy fields such as kingdom, superclass, class, subclass, and direct parent. | [ClassyFire paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC5096306/) |"
+    )?;
+    writeln!(
+        file,
+        "| Source dataset | The dataset or library source from which the spectrum metadata originated. | [GNPS libraries](https://ccms-ucsd.github.io/GNPSDocumentation/gnpslibraries/) / [MassSpecGym](https://github.com/pluskal-lab/MassSpecGym) |"
+    )?;
+    writeln!(
+        file,
+        "| Enrichment | A group has high enrichment when a large percentage of spectra in that group are target-positive. | Local report definition |"
+    )?;
+    writeln!(
+        file,
+        "| Low support | A warning that a group has too few total spectra, too few target-positive spectra, or no target-positive spectra. | Local report definition |"
+    )?;
 
     Ok(())
 }
@@ -435,5 +561,50 @@ mod tests {
         assert!(contents.contains("tables/summary.csv"));
         assert!(contents.contains("figures/top_npc_classes_by_target_count.svg"));
         assert!(contents.contains("figures/top_npc_classes_by_percent_target.svg"));
+    }
+
+    #[test]
+    fn read_numeric_summary_errors_when_required_metric_is_missing() {
+        let temp_dir = tempfile::tempdir().unwrap();
+        let reports = ReportPaths::prepare(temp_dir.path().join("f")).unwrap();
+
+        std::fs::write(
+            reports.table("summary.csv"),
+            ["metric,value", "target_element,F", "total_records,100"].join("\n"),
+        )
+        .unwrap();
+
+        let error = read_numeric_summary(&reports).unwrap_err();
+
+        assert!(matches!(
+            error,
+            SpectraProfilerError::MissingSummaryMetric { metric: "records_with_target_element" }
+        ));
+    }
+
+    #[test]
+    fn read_numeric_summary_errors_when_metric_is_not_numeric() {
+        let temp_dir = tempfile::tempdir().unwrap();
+        let reports = ReportPaths::prepare(temp_dir.path().join("f")).unwrap();
+
+        std::fs::write(
+            reports.table("summary.csv"),
+            [
+                "metric,value",
+                "target_element,F",
+                "total_records,not-a-number",
+                "records_with_formula,100",
+                "records_with_target_element,10",
+            ]
+            .join("\n"),
+        )
+        .unwrap();
+
+        let error = read_numeric_summary(&reports).unwrap_err();
+
+        assert!(matches!(
+            error,
+            SpectraProfilerError::InvalidSummaryMetric { metric: "total_records", .. }
+        ));
     }
 }

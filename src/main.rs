@@ -19,7 +19,7 @@ use mascot_rs::prelude::*;
 use profiler::profile_dataset;
 use reports::ReportPaths;
 
-use crate::error::{Result, SpectraProfilerError};
+use crate::error::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -27,9 +27,7 @@ async fn main() -> Result<()> {
 
     println!("Dataset: {}", config.dataset_name);
 
-    let spectra = load_dataset(&config.dataset_source, &config.cache_dir)
-        .await
-        .map_err(|source| SpectraProfilerError::DatasetLoad { source })?;
+    let spectra = load_dataset(&config.dataset_source, &config.cache_dir).await?;
 
     println!("Loaded {} spectra", spectra.len());
 
@@ -47,8 +45,7 @@ async fn main() -> Result<()> {
         println!("Profiling target element: {target_element}");
         println!("Report directory: {}", report_paths.root.display());
 
-        profile_dataset(&spectra, &target_element, &report_paths)
-            .map_err(|source| SpectraProfilerError::ReportGeneration { source })?;
+        profile_dataset(&spectra, &target_element, &report_paths)?;
 
         write_markdown_report(&config.dataset_name, &target_element, &report_paths)?;
 

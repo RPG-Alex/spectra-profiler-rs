@@ -22,7 +22,7 @@ pub fn is_valid_element_symbol(symbol: &str) -> bool {
 /// Returns `None` when the input is empty or not a known element symbol.
 ///
 /// # Parameters
-/// -element symbol passed from CLI input
+/// - `input`: Element symbol passed from CLI input.
 pub fn normalize_element_symbol(input: &str) -> Option<String> {
     let input = input.trim();
 

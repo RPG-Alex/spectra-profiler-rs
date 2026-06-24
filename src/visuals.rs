@@ -1,9 +1,12 @@
-use std::{cmp::Ordering, path::Path};
+use std::{cmp::Ordering, fmt::Debug, path::Path};
 
 use plotters::prelude::*;
 
-use crate::{population::PopulationSummaryRow, reports::ReportPaths};
-
+use crate::{
+    error::{Result, SpectraProfilerError},
+    population::PopulationSummaryRow,
+    reports::ReportPaths,
+};
 #[derive(Debug, Copy, Clone)]
 pub enum PopulationMetric {
     TargetCount,
@@ -38,7 +41,7 @@ pub fn write_standard_population_figures(
     stem: &str,
     title_root: &str,
     rows: &[PopulationSummaryRow],
-) -> std::result::Result<(), Box<dyn std::error::Error>> {
+) -> Result<()> {
     render_top_population_chart(
         reports
             .figure(&format!("top_{stem}_by_{}.svg", PopulationMetric::TargetCount.file_suffix())),
@@ -71,7 +74,7 @@ fn render_top_population_chart(
     metric: PopulationMetric,
     max_items: usize,
     min_total_count: usize,
-) -> std::result::Result<(), Box<dyn std::error::Error>> {
+) -> Result<()> {
     let mut filtered: Vec<PopulationSummaryRow> = rows
         .iter()
         .filter(|row| row.total_count >= min_total_count)
@@ -92,7 +95,7 @@ fn render_top_population_chart(
     let max_value = filtered.iter().map(|row| metric.value(row)).fold(0.0_f64, f64::max).max(1.0);
 
     let root = SVGBackend::new(path.as_ref(), (1400, 900)).into_drawing_area();
-    root.fill(&WHITE)?;
+    root.fill(&WHITE).map_err(figure_error)?;
 
     let y_count = filtered.len() as i32;
 
@@ -101,7 +104,8 @@ fn render_top_population_chart(
         .margin(25)
         .x_label_area_size(60)
         .y_label_area_size(280)
-        .build_cartesian_2d(0f64..(max_value * 1.15), 0i32..y_count)?;
+        .build_cartesian_2d(0f64..(max_value * 1.15), 0i32..y_count)
+        .map_err(figure_error)?;
 
     chart
         .configure_mesh()
@@ -116,17 +120,20 @@ fn render_top_population_chart(
                 .map(|row| row.value.clone())
                 .unwrap_or_default()
         })
-        .draw()?;
+        .draw()
+        .map_err(figure_error)?;
 
     for (idx, row) in filtered.iter().enumerate() {
         let y0 = idx as i32;
         let y1 = y0 + 1;
         let value = metric.value(row);
 
-        chart.draw_series(std::iter::once(Rectangle::new(
-            [(0.0, y0), (value, y1)],
-            BLUE.mix(0.6).filled(),
-        )))?;
+        chart
+            .draw_series(std::iter::once(Rectangle::new(
+                [(0.0, y0), (value, y1)],
+                BLUE.mix(0.6).filled(),
+            )))
+            .map_err(figure_error)?;
 
         let label = match metric {
             PopulationMetric::TargetCount => {
@@ -137,15 +144,21 @@ fn render_top_population_chart(
             }
         };
 
-        chart.draw_series(std::iter::once(Text::new(
-            label,
-            (value + max_value * 0.01, y0),
-            ("sans-serif", 16).into_font(),
-        )))?;
+        chart
+            .draw_series(std::iter::once(Text::new(
+                label,
+                (value + max_value * 0.01, y0),
+                ("sans-serif", 16).into_font(),
+            )))
+            .map_err(figure_error)?;
     }
 
-    root.present()?;
+    root.present().map_err(figure_error)?;
     Ok(())
+}
+
+fn figure_error(error: impl Debug) -> SpectraProfilerError {
+    SpectraProfilerError::FigureGeneration { message: format!("{error:?}") }
 }
 
 #[cfg(test)]

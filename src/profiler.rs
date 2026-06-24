@@ -2,6 +2,7 @@ use mascot_rs::prelude::*;
 
 use crate::{
     chemistry::contains_element,
+    error::Result,
     metadata::{metadata_value, optional_debug_label},
     population::{
         PopulationMap, increment_pipe_population, increment_population, summarize_population_map,
@@ -15,7 +16,7 @@ pub fn profile_dataset(
     spectra: &MGFVec<f64>,
     target_element: &str,
     reports: &ReportPaths,
-) -> std::result::Result<(), Box<dyn std::error::Error>> {
+) -> Result<()> {
     let mut total_records = 0usize;
     let mut records_with_formula = 0usize;
     let mut records_with_target_element = 0usize;
@@ -169,7 +170,7 @@ fn write_population_outputs(
     counts: &PopulationMap,
     total_records: usize,
     total_target_records: usize,
-) -> std::result::Result<(), Box<dyn std::error::Error>> {
+) -> Result<()> {
     write_population_map_csv(
         reports.table(&format!("contains_by_{stem}.csv")),
         counts,
@@ -190,7 +191,7 @@ fn write_summary_csv(
     records_with_formula: usize,
     records_with_target_element: usize,
     target_element: &str,
-) -> std::result::Result<(), Box<dyn std::error::Error>> {
+) -> Result<()> {
     let mut writer = csv::Writer::from_path(reports.table("summary.csv"))?;
 
     writer.write_record(["metric", "value"])?;

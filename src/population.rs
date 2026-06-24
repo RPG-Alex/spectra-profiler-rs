@@ -2,6 +2,8 @@ use std::{collections::BTreeMap, path::Path};
 
 use serde::Serialize;
 
+use crate::error::Result;
+
 const LOW_TOTAL_SUPPORT_THRESHOLD: usize = 30;
 const LOW_TARGET_SUPPORT_THRESHOLD: usize = 10;
 
@@ -76,7 +78,7 @@ pub fn write_population_map_csv(
     counts: &PopulationMap,
     total_records: usize,
     total_target_records: usize,
-) -> std::result::Result<(), Box<dyn std::error::Error>> {
+) -> Result<()> {
     let mut writer = csv::Writer::from_path(path)?;
 
     let summary_rows = summarize_population_map(counts, total_records, total_target_records);

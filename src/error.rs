@@ -28,13 +28,6 @@ pub enum SpectraProfilerError {
         source: Box<dyn std::error::Error>,
     },
 
-    /// Report generation failed.
-    #[error("failed to generate report output")]
-    ReportGeneration {
-        #[source]
-        source: Box<dyn std::error::Error>,
-    },
-
     /// CSV reading or writing failed.
     #[error(transparent)]
     Csv(#[from] csv::Error),
@@ -42,4 +35,8 @@ pub enum SpectraProfilerError {
     /// Filesystem I/O failed.
     #[error(transparent)]
     Io(#[from] io::Error),
+
+    /// Figure generation failed.
+    #[error("failed to render figure: {message}")]
+    FigureGeneration { message: String },
 }
