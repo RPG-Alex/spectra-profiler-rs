@@ -2,6 +2,38 @@
 
 This report summarizes how often the target element `Br` appears across metadata groups in `annotated_ms2`.
 
+
+## Numeric summary
+
+| Metric | Value |
+|---|---:|
+| Total spectra | 443905 |
+| Positive count | 4212 |
+| Negative count | 439693 |
+| Positive percentage | 0.9489% |
+
+## Top enriched groups
+
+These are the most target-enriched metadata groups with at least `30` total spectra.
+
+| Metadata group | Value | Total | Positive | Positive % | % of positives |
+|---|---|---:|---:|---:|---:|
+| NPC classes | 2-arylbenzofurans | 81 | 12 | 14.81% | 0.28% |
+| NPC classes | Griseofulvins | 343 | 44 | 12.83% | 1.04% |
+| NPC superclasses | Diphenyl ethers (DPEs) | 141 | 18 | 12.77% | 0.43% |
+| NPC classes | Carane monoterpenoids | 162 | 13 | 8.02% | 0.31% |
+| NPC classes | Furofuranoid lignans | 1171 | 87 | 7.43% | 2.07% |
+| NPC classes | Halogenated hydrocarbons | 124 | 8 | 6.45% | 0.19% |
+| NPC classes | Neoflavonoids | 563 | 35 | 6.22% | 0.83% |
+| NPC classes | Benzophenones | 157 | 9 | 5.73% | 0.21% |
+
+## Low-support warning summary
+
+| Warning | Count |
+|---|---:|
+| `LOW_TARGET_SUPPORT` | 67 |
+| `LOW_TOTAL_SUPPORT` | 204 |
+| `NO_TARGET_POSITIVES` | 505 |
 ## Summary
 
 - [Summary table](tables/summary.csv)

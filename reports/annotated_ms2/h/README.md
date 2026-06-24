@@ -2,6 +2,37 @@
 
 This report summarizes how often the target element `H` appears across metadata groups in `annotated_ms2`.
 
+
+## Numeric summary
+
+| Metric | Value |
+|---|---:|
+| Total spectra | 443905 |
+| Positive count | 443900 |
+| Negative count | 5 |
+| Positive percentage | 99.9989% |
+
+## Top enriched groups
+
+These are the most target-enriched metadata groups with at least `30` total spectra.
+
+| Metadata group | Value | Total | Positive | Positive % | % of positives |
+|---|---|---:|---:|---:|---:|
+| Source instrument | Orbitrap | 375443 | 375443 | 100.00% | 84.58% |
+| Library quality | 1 | 342487 | 342487 | 100.00% | 77.15% |
+| Organism | BMDMS-NP | 125071 | 125071 | 100.00% | 28.18% |
+| Organism | MSNLIB-POSITIVE | 120978 | 120978 | 100.00% | 27.25% |
+| NPC pathways | Shikimates and Phenylpropanoids | 88308 | 88308 | 100.00% | 19.89% |
+| NPC pathways | Terpenoids | 70569 | 70569 | 100.00% | 15.90% |
+| NPC superclasses | Nicotinic acid alkaloids | 62604 | 62604 | 100.00% | 14.10% |
+| NPC classes | Pyridine alkaloids | 62604 | 62604 | 100.00% | 14.10% |
+
+## Low-support warning summary
+
+| Warning | Count |
+|---|---:|
+| `LOW_TARGET_SUPPORT` | 140 |
+| `LOW_TOTAL_SUPPORT` | 204 |
 ## Summary
 
 - [Summary table](tables/summary.csv)

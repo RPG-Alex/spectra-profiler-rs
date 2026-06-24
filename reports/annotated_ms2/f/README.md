@@ -2,6 +2,38 @@
 
 This report summarizes how often the target element `F` appears across metadata groups in `annotated_ms2`.
 
+
+## Numeric summary
+
+| Metric | Value |
+|---|---:|
+| Total spectra | 443905 |
+| Positive count | 40395 |
+| Negative count | 403510 |
+| Positive percentage | 9.0999% |
+
+## Top enriched groups
+
+These are the most target-enriched metadata groups with at least `30` total spectra.
+
+| Metadata group | Value | Total | Positive | Positive % | % of positives |
+|---|---|---:|---:|---:|---:|
+| NPC classes | Oxazole alkaloids | 94 | 42 | 44.68% | 0.10% |
+| NPC classes | Carboline alkaloids | 23230 | 7878 | 33.91% | 19.50% |
+| NPC classes | Acridone alkaloids | 2151 | 721 | 33.52% | 1.78% |
+| Organism | MCE-DRUG | 12619 | 3142 | 24.90% | 7.78% |
+| Organism | MSNLIB-NEGATIVE | 46725 | 11458 | 24.52% | 28.36% |
+| Organism | REFRAME-NEGATIVE-LIBRARY | 2453 | 598 | 24.38% | 1.48% |
+| NPC classes | Pregnane steroids | 5003 | 1181 | 23.61% | 2.92% |
+| NPC superclasses | Nicotinic acid alkaloids | 62604 | 13995 | 22.35% | 34.65% |
+
+## Low-support warning summary
+
+| Warning | Count |
+|---|---:|
+| `LOW_TARGET_SUPPORT` | 44 |
+| `LOW_TOTAL_SUPPORT` | 204 |
+| `NO_TARGET_POSITIVES` | 481 |
 ## Summary
 
 - [Summary table](tables/summary.csv)

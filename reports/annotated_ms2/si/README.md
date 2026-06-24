@@ -2,6 +2,38 @@
 
 This report summarizes how often the target element `Si` appears across metadata groups in `annotated_ms2`.
 
+
+## Numeric summary
+
+| Metric | Value |
+|---|---:|
+| Total spectra | 443905 |
+| Positive count | 77 |
+| Negative count | 443828 |
+| Positive percentage | 0.0173% |
+
+## Top enriched groups
+
+These are the most target-enriched metadata groups with at least `30` total spectra.
+
+| Metadata group | Value | Total | Positive | Positive % | % of positives |
+|---|---|---:|---:|---:|---:|
+| Organism | GNPS-COLLECTIONS-PESTICIDES-POSITIVE | 109 | 2 | 1.83% | 2.60% |
+| NPC classes | Pyrroloquinoline alkaloids | 752 | 7 | 0.93% | 9.09% |
+| NPC superclasses | Histidine alkaloids | 5249 | 48 | 0.91% | 62.34% |
+| NPC classes | Imidazole alkaloids | 5249 | 48 | 0.91% | 62.34% |
+| NPC classes | Hydrocarbons | 907 | 7 | 0.77% | 9.09% |
+| Source instrument | FourierTransform | 1200 | 6 | 0.50% | 7.79% |
+| NPC superclasses | Fatty acyls | 1885 | 7 | 0.37% | 9.09% |
+| Organism | GNPS-NIST14-MATCHES | 2631 | 7 | 0.27% | 9.09% |
+
+## Low-support warning summary
+
+| Warning | Count |
+|---|---:|
+| `LOW_TARGET_SUPPORT` | 22 |
+| `LOW_TOTAL_SUPPORT` | 204 |
+| `NO_TARGET_POSITIVES` | 640 |
 ## Summary
 
 - [Summary table](tables/summary.csv)

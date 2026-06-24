@@ -2,6 +2,38 @@
 
 This report summarizes how often the target element `As` appears across metadata groups in `annotated_ms2`.
 
+
+## Numeric summary
+
+| Metric | Value |
+|---|---:|
+| Total spectra | 443905 |
+| Positive count | 25 |
+| Negative count | 443880 |
+| Positive percentage | 0.0056% |
+
+## Top enriched groups
+
+These are the most target-enriched metadata groups with at least `30` total spectra.
+
+| Metadata group | Value | Total | Positive | Positive % | % of positives |
+|---|---|---:|---:|---:|---:|
+| NPC classes | Oxygenated hydrocarbons | 254 | 4 | 1.57% | 16.00% |
+| Organism | CMMC-FOOD-BIOMARKERS | 629 | 2 | 0.32% | 8.00% |
+| NPC classes | Tripeptides | 2829 | 8 | 0.28% | 32.00% |
+| NPC superclasses | Fatty acyls | 1885 | 4 | 0.21% | 16.00% |
+| Organism | GNPS-LIBRARY | 5073 | 7 | 0.14% | 28.00% |
+| Organism | REFRAME-NEGATIVE-LIBRARY | 2453 | 3 | 0.12% | 12.00% |
+| NPC classes | Cyclic peptides | 2077 | 2 | 0.10% | 8.00% |
+| NPC classes | Simple amide alkaloids | 3329 | 3 | 0.09% | 12.00% |
+
+## Low-support warning summary
+
+| Warning | Count |
+|---|---:|
+| `LOW_TARGET_SUPPORT` | 23 |
+| `LOW_TOTAL_SUPPORT` | 204 |
+| `NO_TARGET_POSITIVES` | 647 |
 ## Summary
 
 - [Summary table](tables/summary.csv)

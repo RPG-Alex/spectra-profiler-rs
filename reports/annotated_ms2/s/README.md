@@ -2,6 +2,38 @@
 
 This report summarizes how often the target element `S` appears across metadata groups in `annotated_ms2`.
 
+
+## Numeric summary
+
+| Metric | Value |
+|---|---:|
+| Total spectra | 443905 |
+| Positive count | 55987 |
+| Negative count | 387918 |
+| Positive percentage | 12.6124% |
+
+## Top enriched groups
+
+These are the most target-enriched metadata groups with at least `30` total spectra.
+
+| Metadata group | Value | Total | Positive | Positive % | % of positives |
+|---|---|---:|---:|---:|---:|
+| NPC classes | Cephalosporins | 1071 | 1071 | 100.00% | 1.91% |
+| NPC classes | Penicillins | 755 | 755 | 100.00% | 1.35% |
+| NPC superclasses | Serine alkaloids | 649 | 649 | 100.00% | 1.16% |
+| NPC classes | Thiazole alkaloids | 649 | 649 | 100.00% | 1.16% |
+| NPC classes | Glucosinolates | 259 | 259 | 100.00% | 0.46% |
+| NPC classes | Carbapenems | 111 | 111 | 100.00% | 0.20% |
+| NPC classes | Thia fatty acids | 73 | 73 | 100.00% | 0.13% |
+| NPC classes | Fatty acyl CoAs | 57 | 57 | 100.00% | 0.10% |
+
+## Low-support warning summary
+
+| Warning | Count |
+|---|---:|
+| `LOW_TARGET_SUPPORT` | 69 |
+| `LOW_TOTAL_SUPPORT` | 204 |
+| `NO_TARGET_POSITIVES` | 367 |
 ## Summary
 
 - [Summary table](tables/summary.csv)

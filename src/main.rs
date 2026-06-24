@@ -1,6 +1,7 @@
 mod chemistry;
 mod config;
 mod datasets;
+mod error;
 mod markdown;
 mod metadata;
 mod population;
@@ -18,13 +19,17 @@ use mascot_rs::prelude::*;
 use profiler::profile_dataset;
 use reports::ReportPaths;
 
+use crate::error::{Result, SpectraProfilerError};
+
 #[tokio::main]
-async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
+async fn main() -> Result<()> {
     let config = ProfileConfig::from_args()?;
 
     println!("Dataset: {}", config.dataset_name);
 
-    let spectra = load_dataset(&config.dataset_source, &config.cache_dir).await?;
+    let spectra = load_dataset(&config.dataset_source, &config.cache_dir)
+        .await
+        .map_err(|source| SpectraProfilerError::DatasetLoad { source })?;
 
     println!("Loaded {} spectra", spectra.len());
 
@@ -42,7 +47,8 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
         println!("Profiling target element: {target_element}");
         println!("Report directory: {}", report_paths.root.display());
 
-        profile_dataset(&spectra, &target_element, &report_paths)?;
+        profile_dataset(&spectra, &target_element, &report_paths)
+            .map_err(|source| SpectraProfilerError::ReportGeneration { source })?;
 
         write_markdown_report(&config.dataset_name, &target_element, &report_paths)?;
 

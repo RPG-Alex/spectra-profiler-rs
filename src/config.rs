@@ -1,6 +1,9 @@
-use std::{io, path::PathBuf};
+use std::path::PathBuf;
 
-use crate::chemistry::normalize_element_symbol;
+use crate::{
+    chemistry::normalize_element_symbol,
+    error::{Result, SpectraProfilerError},
+};
 
 #[derive(Debug, Clone)]
 pub enum DatasetSource {
@@ -24,11 +27,11 @@ pub struct ProfileConfig {
 }
 
 impl ProfileConfig {
-    pub fn from_args() -> std::result::Result<Self, Box<dyn std::error::Error>> {
+    pub fn from_args() -> Result<Self> {
         Self::from_iter(std::env::args().skip(1))
     }
 
-    pub fn from_iter<I, S>(args: I) -> std::result::Result<Self, Box<dyn std::error::Error>>
+    pub fn from_iter<I, S>(args: I) -> Result<Self>
     where
         I: IntoIterator<Item = S>,
         S: Into<String>,
@@ -41,10 +44,7 @@ impl ProfileConfig {
             TargetSelection::AllObserved
         } else {
             let target_element = normalize_element_symbol(&raw_target).ok_or_else(|| {
-                io::Error::new(
-                    io::ErrorKind::InvalidInput,
-                    format!("invalid element symbol: {raw_target}"),
-                )
+                SpectraProfilerError::InvalidElementSymbol { symbol: raw_target.clone() }
             })?;
 
             TargetSelection::One(target_element)
@@ -142,5 +142,23 @@ mod tests {
             config.report_dir_for("Cl"),
             PathBuf::from("reports").join("annotated_ms2").join("cl")
         );
+    }
+
+    #[test]
+    fn rejects_invalid_target_element() {
+        let error = ProfileConfig::from_iter(["Bl"]).unwrap_err();
+        let message = error.to_string();
+
+        assert!(message.contains("invalid element symbol `Bl`"));
+    }
+
+    #[test]
+    fn still_accepts_all_target_selection() {
+        let config = ProfileConfig::from_iter(["all"]).unwrap();
+
+        match config.target_selection {
+            TargetSelection::AllObserved => {}
+            TargetSelection::One(element) => panic!("expected all, got {element}"),
+        }
     }
 }

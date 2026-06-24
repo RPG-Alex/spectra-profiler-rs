@@ -2,6 +2,37 @@
 
 This report summarizes how often the target element `C` appears across metadata groups in `annotated_ms2`.
 
+
+## Numeric summary
+
+| Metric | Value |
+|---|---:|
+| Total spectra | 443905 |
+| Positive count | 443905 |
+| Negative count | 0 |
+| Positive percentage | 100.0000% |
+
+## Top enriched groups
+
+These are the most target-enriched metadata groups with at least `30` total spectra.
+
+| Metadata group | Value | Total | Positive | Positive % | % of positives |
+|---|---|---:|---:|---:|---:|
+| NPC classes | TOTAL_ASSIGNMENTS | 470729 | 470729 | 100.00% | 106.04% |
+| NPC pathways | TOTAL_ASSIGNMENTS | 455308 | 455308 | 100.00% | 102.57% |
+| NPC superclasses | TOTAL_ASSIGNMENTS | 453774 | 453774 | 100.00% | 102.22% |
+| NPC pathways | TOTAL_RECORDS | 443905 | 443905 | 100.00% | 100.00% |
+| NPC superclasses | TOTAL_RECORDS | 443905 | 443905 | 100.00% | 100.00% |
+| NPC classes | TOTAL_RECORDS | 443905 | 443905 | 100.00% | 100.00% |
+| Source dataset | TOTAL_RECORDS | 443905 | 443905 | 100.00% | 100.00% |
+| Source dataset | TOTAL_ASSIGNMENTS | 443905 | 443905 | 100.00% | 100.00% |
+
+## Low-support warning summary
+
+| Warning | Count |
+|---|---:|
+| `LOW_TARGET_SUPPORT` | 140 |
+| `LOW_TOTAL_SUPPORT` | 204 |
 ## Summary
 
 - [Summary table](tables/summary.csv)

@@ -2,6 +2,38 @@
 
 This report summarizes how often the target element `Na` appears across metadata groups in `annotated_ms2`.
 
+
+## Numeric summary
+
+| Metric | Value |
+|---|---:|
+| Total spectra | 443905 |
+| Positive count | 514 |
+| Negative count | 443391 |
+| Positive percentage | 0.1158% |
+
+## Top enriched groups
+
+These are the most target-enriched metadata groups with at least `30` total spectra.
+
+| Metadata group | Value | Total | Positive | Positive % | % of positives |
+|---|---|---:|---:|---:|---:|
+| NPC classes | Polyether ionophores | 391 | 134 | 34.27% | 26.07% |
+| NPC classes | Fusidane triterpenoids | 284 | 83 | 29.23% | 16.15% |
+| NPC superclasses | Polyethers | 595 | 134 | 22.52% | 26.07% |
+| NPC classes | Oxygenated hydrocarbons | 254 | 20 | 7.87% | 3.89% |
+| NPC classes | Naphthoquinones | 572 | 23 | 4.02% | 4.47% |
+| Organism | BIRMINGHAM-UHPLC-MS-POS | 669 | 24 | 3.59% | 4.67% |
+| NPC classes | Polyamines | 3393 | 88 | 2.59% | 17.12% |
+| Organism | GNPS-NIH-SMALLMOLECULEPHARMACOLOGICALLYACTIVE | 906 | 23 | 2.54% | 4.47% |
+
+## Low-support warning summary
+
+| Warning | Count |
+|---|---:|
+| `LOW_TARGET_SUPPORT` | 28 |
+| `LOW_TOTAL_SUPPORT` | 204 |
+| `NO_TARGET_POSITIVES` | 610 |
 ## Summary
 
 - [Summary table](tables/summary.csv)

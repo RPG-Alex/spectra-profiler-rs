@@ -2,6 +2,38 @@
 
 This report summarizes how often the target element `Mg` appears across metadata groups in `annotated_ms2`.
 
+
+## Numeric summary
+
+| Metric | Value |
+|---|---:|
+| Total spectra | 443905 |
+| Positive count | 1 |
+| Negative count | 443904 |
+| Positive percentage | 0.0002% |
+
+## Top enriched groups
+
+These are the most target-enriched metadata groups with at least `30` total spectra.
+
+| Metadata group | Value | Total | Positive | Positive % | % of positives |
+|---|---|---:|---:|---:|---:|
+| Organism | GNPS-NIH-SMALLMOLECULEPHARMACOLOGICALLYACTIVE | 906 | 1 | 0.11% | 100.00% |
+| NPC classes | Carboline alkaloids | 23230 | 1 | 0.00% | 100.00% |
+| Source instrument | TimeOfFlight | 37523 | 1 | 0.00% | 100.00% |
+| NPC superclasses | Tryptophan alkaloids | 42993 | 1 | 0.00% | 100.00% |
+| NPC pathways | Alkaloids | 210679 | 1 | 0.00% | 100.00% |
+| Library quality | 1 | 342487 | 1 | 0.00% | 100.00% |
+| Ion mode | Positive | 389293 | 1 | 0.00% | 100.00% |
+| Source dataset | GNPS | 389560 | 1 | 0.00% | 100.00% |
+
+## Low-support warning summary
+
+| Warning | Count |
+|---|---:|
+| `LOW_TARGET_SUPPORT` | 8 |
+| `LOW_TOTAL_SUPPORT` | 204 |
+| `NO_TARGET_POSITIVES` | 667 |
 ## Summary
 
 - [Summary table](tables/summary.csv)

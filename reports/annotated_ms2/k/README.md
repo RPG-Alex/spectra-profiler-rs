@@ -2,6 +2,38 @@
 
 This report summarizes how often the target element `K` appears across metadata groups in `annotated_ms2`.
 
+
+## Numeric summary
+
+| Metric | Value |
+|---|---:|
+| Total spectra | 443905 |
+| Positive count | 85 |
+| Negative count | 443820 |
+| Positive percentage | 0.0191% |
+
+## Top enriched groups
+
+These are the most target-enriched metadata groups with at least `30` total spectra.
+
+| Metadata group | Value | Total | Positive | Positive % | % of positives |
+|---|---|---:|---:|---:|---:|
+| NPC classes | Glucosinolates | 259 | 51 | 19.69% | 60.00% |
+| NPC superclasses | Amino acid glycosides | 432 | 51 | 11.81% | 60.00% |
+| NPC classes | Fatty aldehydes | 48 | 4 | 8.33% | 4.71% |
+| NPC classes | Lupane triterpenoids | 819 | 28 | 3.42% | 32.94% |
+| Organism | BIRMINGHAM-UHPLC-MS-POS | 669 | 3 | 0.45% | 3.53% |
+| Organism | GNPS-NIH-SMALLMOLECULEPHARMACOLOGICALLYACTIVE | 906 | 2 | 0.22% | 2.35% |
+| NPC superclasses | Fatty acyls | 1885 | 4 | 0.21% | 4.71% |
+| Organism | PSU-MSMLS | 482 | 1 | 0.21% | 1.18% |
+
+## Low-support warning summary
+
+| Warning | Count |
+|---|---:|
+| `LOW_TARGET_SUPPORT` | 13 |
+| `LOW_TOTAL_SUPPORT` | 204 |
+| `NO_TARGET_POSITIVES` | 651 |
 ## Summary
 
 - [Summary table](tables/summary.csv)

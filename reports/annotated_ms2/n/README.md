@@ -2,6 +2,38 @@
 
 This report summarizes how often the target element `N` appears across metadata groups in `annotated_ms2`.
 
+
+## Numeric summary
+
+| Metric | Value |
+|---|---:|
+| Total spectra | 443905 |
+| Positive count | 287885 |
+| Negative count | 156020 |
+| Positive percentage | 64.8528% |
+
+## Top enriched groups
+
+These are the most target-enriched metadata groups with at least `30` total spectra.
+
+| Metadata group | Value | Total | Positive | Positive % | % of positives |
+|---|---|---:|---:|---:|---:|
+| NPC superclasses | Nicotinic acid alkaloids | 62604 | 62604 | 100.00% | 21.75% |
+| NPC classes | Pyridine alkaloids | 62604 | 62604 | 100.00% | 21.75% |
+| NPC superclasses | Tryptophan alkaloids | 42993 | 42993 | 100.00% | 14.93% |
+| NPC classes | Carboline alkaloids | 23230 | 23230 | 100.00% | 8.07% |
+| NPC superclasses | Pseudoalkaloids | 19762 | 19762 | 100.00% | 6.86% |
+| NPC classes | Dipeptides | 8430 | 8430 | 100.00% | 2.93% |
+| NPC classes | Simple indole alkaloids | 7663 | 7663 | 100.00% | 2.66% |
+| NPC classes | Purine alkaloids | 7052 | 7052 | 100.00% | 2.45% |
+
+## Low-support warning summary
+
+| Warning | Count |
+|---|---:|
+| `LOW_TARGET_SUPPORT` | 81 |
+| `LOW_TOTAL_SUPPORT` | 204 |
+| `NO_TARGET_POSITIVES` | 217 |
 ## Summary
 
 - [Summary table](tables/summary.csv)

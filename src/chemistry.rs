@@ -1,5 +1,28 @@
 use std::collections::BTreeSet;
 
+/// Canonical chemical element symbols.
+pub const ELEMENT_SYMBOLS: &[&str] = &[
+    "H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "Mg", "Al", "Si", "P", "S", "Cl",
+    "Ar", "K", "Ca", "Sc", "Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As",
+    "Se", "Br", "Kr", "Rb", "Sr", "Y", "Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd", "In",
+    "Sn", "Sb", "Te", "I", "Xe", "Cs", "Ba", "La", "Ce", "Pr", "Nd", "Pm", "Sm", "Eu", "Gd", "Tb",
+    "Dy", "Ho", "Er", "Tm", "Yb", "Lu", "Hf", "Ta", "W", "Re", "Os", "Ir", "Pt", "Au", "Hg", "Tl",
+    "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk",
+    "Cf", "Es", "Fm", "Md", "No", "Lr", "Rf", "Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg", "Cn", "Nh",
+    "Fl", "Mc", "Lv", "Ts", "Og",
+];
+
+/// Returns `true` if `symbol` is a canonical element symbol.
+pub fn is_valid_element_symbol(symbol: &str) -> bool {
+    ELEMENT_SYMBOLS.contains(&symbol)
+}
+
+/// Normalizes and validates an element symbol.
+///
+/// Returns `None` when the input is empty or not a known element symbol.
+///
+/// # Parameters
+/// -element symbol passed from CLI input
 pub fn normalize_element_symbol(input: &str) -> Option<String> {
     let input = input.trim();
 
@@ -11,8 +34,9 @@ pub fn normalize_element_symbol(input: &str) -> Option<String> {
 
     let first = chars.next()?.to_ascii_uppercase();
     let rest = chars.as_str().to_ascii_lowercase();
+    let symbol = format!("{first}{rest}");
 
-    Some(format!("{first}{rest}"))
+    is_valid_element_symbol(&symbol).then_some(symbol)
 }
 
 pub fn contains_element(formula: &str, target: &str) -> bool {
@@ -20,7 +44,7 @@ pub fn contains_element(formula: &str, target: &str) -> bool {
 }
 
 pub fn element_symbols_in_formula(formula: &str) -> BTreeSet<String> {
-    formula_symbols(formula).collect()
+    formula_symbols(formula).filter(|symbol| is_valid_element_symbol(symbol)).collect()
 }
 
 fn formula_symbols(formula: &str) -> impl Iterator<Item = String> + '_ {
@@ -100,5 +124,20 @@ mod tests {
         assert!(symbols.contains("N"));
         assert!(symbols.contains("O"));
         assert_eq!(symbols.len(), 6);
+    }
+
+    #[test]
+    fn rejects_invalid_element_symbols() {
+        assert_eq!(normalize_element_symbol("Bl"), None);
+        assert_eq!(normalize_element_symbol("Xx"), None);
+        assert_eq!(normalize_element_symbol("Water"), None);
+    }
+
+    #[test]
+    fn all_real_halogen_symbols_are_valid() {
+        assert_eq!(normalize_element_symbol("F"), Some("F".to_string()));
+        assert_eq!(normalize_element_symbol("Cl"), Some("Cl".to_string()));
+        assert_eq!(normalize_element_symbol("Br"), Some("Br".to_string()));
+        assert_eq!(normalize_element_symbol("I"), Some("I".to_string()));
     }
 }

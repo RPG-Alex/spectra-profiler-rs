@@ -2,6 +2,38 @@
 
 This report summarizes how often the target element `P` appears across metadata groups in `annotated_ms2`.
 
+
+## Numeric summary
+
+| Metric | Value |
+|---|---:|
+| Total spectra | 443905 |
+| Positive count | 15524 |
+| Negative count | 428381 |
+| Positive percentage | 3.4971% |
+
+## Top enriched groups
+
+These are the most target-enriched metadata groups with at least `30` total spectra.
+
+| Metadata group | Value | Total | Positive | Positive % | % of positives |
+|---|---|---:|---:|---:|---:|
+| NPC classes | Glycerophosphoethanolamines | 1575 | 1575 | 100.00% | 10.15% |
+| NPC classes | Phosphosphingolipids | 1081 | 1081 | 100.00% | 6.96% |
+| NPC classes | Glycerophosphoserines | 412 | 412 | 100.00% | 2.65% |
+| NPC classes | Fatty acyl CoAs | 57 | 57 | 100.00% | 0.37% |
+| NPC classes | Glycerophosphates | 43 | 43 | 100.00% | 0.28% |
+| NPC classes | Glycerophosphocholines | 7671 | 7662 | 99.88% | 49.36% |
+| NPC superclasses | Glycerophospholipids | 9759 | 9745 | 99.86% | 62.77% |
+| NPC classes | Halogenated hydrocarbons | 124 | 118 | 95.16% | 0.76% |
+
+## Low-support warning summary
+
+| Warning | Count |
+|---|---:|
+| `LOW_TARGET_SUPPORT` | 54 |
+| `LOW_TOTAL_SUPPORT` | 204 |
+| `NO_TARGET_POSITIVES` | 496 |
 ## Summary
 
 - [Summary table](tables/summary.csv)

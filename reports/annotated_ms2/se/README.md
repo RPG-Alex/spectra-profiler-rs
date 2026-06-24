@@ -2,6 +2,38 @@
 
 This report summarizes how often the target element `Se` appears across metadata groups in `annotated_ms2`.
 
+
+## Numeric summary
+
+| Metric | Value |
+|---|---:|
+| Total spectra | 443905 |
+| Positive count | 67 |
+| Negative count | 443838 |
+| Positive percentage | 0.0151% |
+
+## Top enriched groups
+
+These are the most target-enriched metadata groups with at least `30` total spectra.
+
+| Metadata group | Value | Total | Positive | Positive % | % of positives |
+|---|---|---:|---:|---:|---:|
+| Organism | CMMC-FOOD-BIOMARKERS | 629 | 9 | 1.43% | 13.43% |
+| Organism | GNPS-MSMLS | 442 | 2 | 0.45% | 2.99% |
+| Organism | PSU-MSMLS | 482 | 2 | 0.41% | 2.99% |
+| NPC classes | Aminoacids | 12822 | 47 | 0.37% | 70.15% |
+| Organism | MONA | 2672 | 9 | 0.34% | 13.43% |
+| NPC superclasses | Small peptides | 23205 | 47 | 0.20% | 70.15% |
+| Organism | HMDB | 1520 | 3 | 0.20% | 4.48% |
+| NPC classes | Quinazoline alkaloids | 6532 | 12 | 0.18% | 17.91% |
+
+## Low-support warning summary
+
+| Warning | Count |
+|---|---:|
+| `LOW_TARGET_SUPPORT` | 20 |
+| `LOW_TOTAL_SUPPORT` | 204 |
+| `NO_TARGET_POSITIVES` | 642 |
 ## Summary
 
 - [Summary table](tables/summary.csv)

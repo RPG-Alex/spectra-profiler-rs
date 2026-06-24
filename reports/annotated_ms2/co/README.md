@@ -2,6 +2,37 @@
 
 This report summarizes how often the target element `Co` appears across metadata groups in `annotated_ms2`.
 
+
+## Numeric summary
+
+| Metric | Value |
+|---|---:|
+| Total spectra | 443905 |
+| Positive count | 16 |
+| Negative count | 443889 |
+| Positive percentage | 0.0036% |
+
+## Top enriched groups
+
+These are the most target-enriched metadata groups with at least `30` total spectra.
+
+| Metadata group | Value | Total | Positive | Positive % | % of positives |
+|---|---|---:|---:|---:|---:|
+| NPC superclasses | Terphenyls | 232 | 16 | 6.90% | 100.00% |
+| NPC classes | p-Terphenyls | 232 | 16 | 6.90% | 100.00% |
+| NPC pathways | Shikimates and Phenylpropanoids | 88308 | 16 | 0.02% | 100.00% |
+| Organism | BMDMS-NP | 125071 | 16 | 0.01% | 100.00% |
+| NPC superclasses | TOTAL_ASSIGNMENTS | 453774 | 32 | 0.01% | 200.00% |
+| NPC classes | TOTAL_ASSIGNMENTS | 470729 | 32 | 0.01% | 200.00% |
+| Library quality | 1 | 342487 | 16 | 0.00% | 100.00% |
+| Source instrument | Orbitrap | 375443 | 16 | 0.00% | 100.00% |
+
+## Low-support warning summary
+
+| Warning | Count |
+|---|---:|
+| `LOW_TOTAL_SUPPORT` | 204 |
+| `NO_TARGET_POSITIVES` | 665 |
 ## Summary
 
 - [Summary table](tables/summary.csv)

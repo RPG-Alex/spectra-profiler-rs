@@ -2,6 +2,38 @@
 
 This report summarizes how often the target element `B` appears across metadata groups in `annotated_ms2`.
 
+
+## Numeric summary
+
+| Metric | Value |
+|---|---:|
+| Total spectra | 443905 |
+| Positive count | 136 |
+| Negative count | 443769 |
+| Positive percentage | 0.0306% |
+
+## Top enriched groups
+
+These are the most target-enriched metadata groups with at least `30` total spectra.
+
+| Metadata group | Value | Total | Positive | Positive % | % of positives |
+|---|---|---:|---:|---:|---:|
+| Organism | BIRMINGHAM-UHPLC-MS-POS | 669 | 5 | 0.75% | 3.68% |
+| Organism | GNPS-SELLECKCHEM-FDA-PART1 | 1233 | 6 | 0.49% | 4.41% |
+| NPC classes | Dipeptides | 8430 | 40 | 0.47% | 29.41% |
+| NPC classes | Phenylethylamines | 5380 | 16 | 0.30% | 11.76% |
+| NPC classes | Simple amide alkaloids | 3329 | 8 | 0.24% | 5.88% |
+| NPC superclasses | Small peptides | 23205 | 51 | 0.22% | 37.50% |
+| Organism | MCE-DRUG | 12619 | 25 | 0.20% | 18.38% |
+| NPC classes | Tripeptides | 2829 | 5 | 0.18% | 3.68% |
+
+## Low-support warning summary
+
+| Warning | Count |
+|---|---:|
+| `LOW_TARGET_SUPPORT` | 30 |
+| `LOW_TOTAL_SUPPORT` | 204 |
+| `NO_TARGET_POSITIVES` | 629 |
 ## Summary
 
 - [Summary table](tables/summary.csv)

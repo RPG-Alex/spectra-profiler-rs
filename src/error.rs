@@ -1,0 +1,45 @@
+use std::io;
+
+/// Project-wide result type.
+pub type Result<T> = std::result::Result<T, SpectraProfilerError>;
+
+/// Errors produced by `spectra-profiler-rs`.
+#[derive(Debug, thiserror::Error)]
+pub enum SpectraProfilerError {
+    /// The requested element symbol is not a valid chemical element symbol.
+    #[error(
+        "invalid element symbol `{symbol}`. Expected a valid chemical element symbol, such as \
+         `F`, `Cl`, `Br`, or `I`, or use `all` to profile every observed element"
+    )]
+    InvalidElementSymbol { symbol: String },
+
+    /// A required summary metric was not found in a generated report table.
+    #[error("missing required summary metric `{metric}` in tables/summary.csv")]
+    MissingSummaryMetric { metric: &'static str },
+
+    /// A required summary metric could not be parsed.
+    #[error("failed to parse summary metric `{metric}` with value `{value}`")]
+    InvalidSummaryMetric { metric: &'static str, value: String },
+
+    /// Dataset loading failed.
+    #[error("failed to load dataset")]
+    DatasetLoad {
+        #[source]
+        source: Box<dyn std::error::Error>,
+    },
+
+    /// Report generation failed.
+    #[error("failed to generate report output")]
+    ReportGeneration {
+        #[source]
+        source: Box<dyn std::error::Error>,
+    },
+
+    /// CSV reading or writing failed.
+    #[error(transparent)]
+    Csv(#[from] csv::Error),
+
+    /// Filesystem I/O failed.
+    #[error(transparent)]
+    Io(#[from] io::Error),
+}
