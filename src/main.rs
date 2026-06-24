@@ -1,5 +1,6 @@
 mod chemistry;
 mod config;
+mod cooccurence;
 mod datasets;
 mod error;
 mod markdown;
@@ -13,6 +14,7 @@ use std::collections::BTreeSet;
 
 use chemistry::element_symbols_in_formula;
 use config::{ProfileConfig, TargetSelection};
+use cooccurence::write_cooccurrence_reports;
 use datasets::load_dataset;
 use markdown::write_markdown_report;
 use mascot_rs::prelude::*;
@@ -30,6 +32,15 @@ async fn main() -> Result<()> {
     let spectra = load_dataset(&config.dataset_source, &config.cache_dir).await?;
 
     println!("Loaded {} spectra", spectra.len());
+
+    let cooccurrence_report_paths = ReportPaths::prepare(config.reports_root.join("cooccurrence"))?;
+
+    println!(
+        "Writing element co-occurrence reports to {}",
+        cooccurrence_report_paths.root.display()
+    );
+
+    write_cooccurrence_reports(&spectra, &cooccurrence_report_paths)?;
 
     let target_elements = match &config.target_selection {
         TargetSelection::One(target_element) => vec![target_element.clone()],
