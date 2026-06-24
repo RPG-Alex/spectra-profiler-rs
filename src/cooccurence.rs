@@ -508,7 +508,7 @@ fn write_dataset_index_readme(
     writeln!(file)?;
     writeln!(
         file,
-        "- [Element co-occurrence profile](cooccurrence/README.md) — raw and normalized atom co-occurrence heatmaps."
+        "- [Element co-occurrence profile](cooccurrence/README.md): Contains raw and normalized atom co-occurrence heatmaps."
     )?;
 
     writeln!(file)?;

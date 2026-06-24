@@ -15,7 +15,7 @@ The reports summarize element presence from molecular formula metadata and shoul
 
 ## Dataset-level reports
 
-- [Element co-occurrence profile](cooccurrence/README.md) — raw and normalized atom co-occurrence heatmaps.
+- [Element co-occurrence profile](cooccurrence/README.md): Contains raw and normalized atom co-occurrence heatmaps.
 
 ## Observed elements
 
