@@ -301,8 +301,7 @@ where
         let x = left_margin + index * cell_size + cell_size / 2;
         let y = top_margin + index * cell_size + cell_size / 2;
 
-        let column_label_style =
-            ("sans-serif", label_font_size).into_font();
+        let column_label_style = ("sans-serif", label_font_size).into_font();
 
         root.draw(&Text::new(
             element.clone(),
