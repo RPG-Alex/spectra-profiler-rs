@@ -84,7 +84,7 @@ fn observed_elements(spectra: &MGFVec<f64>) -> Vec<String> {
             continue;
         };
 
-        for element in element_symbols_in_formula(&formula.to_string()) {
+        for element in element_symbols_in_formula(formula) {
             elements.insert(element);
         }
     }

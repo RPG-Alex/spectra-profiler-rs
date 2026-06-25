@@ -921,7 +921,7 @@ dependencies = [
  "indicatif",
  "mass_spectrometry",
  "mem_dbg",
- "molecular-formulas 0.1.10",
+ "molecular-formulas",
  "smiles-parser",
  "thiserror",
  "ureq",
@@ -1032,17 +1032,6 @@ name = "molecular-formulas"
 version = "0.1.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2157428e33c26e3e5b856371a3be0c2de365d95f968604be07ca05b4bd690adb"
-dependencies = [
- "elements_rs",
- "num-traits",
- "thiserror",
-]
-
-[[package]]
-name = "molecular-formulas"
-version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "786befef7c41081b20608b2b9536e829538725d96e2421f0e431cdbfba6d50c3"
 dependencies = [
  "elements_rs",
  "num-traits",
@@ -1532,7 +1521,7 @@ dependencies = [
  "elements_rs",
  "geometric-traits 0.1.0 (git+https://github.com/earth-metabolome-initiative/geometric-traits?branch=main)",
  "hashbrown 0.17.1",
- "molecular-formulas 0.1.10",
+ "molecular-formulas",
  "smallvec",
  "thiserror",
 ]
@@ -1553,7 +1542,7 @@ version = "0.1.0"
 dependencies = [
  "csv",
  "mascot-rs",
- "molecular-formulas 0.2.0",
+ "molecular-formulas",
  "plotters",
  "serde",
  "tempfile",

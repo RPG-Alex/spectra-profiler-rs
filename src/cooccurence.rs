@@ -97,15 +97,9 @@ impl CooccurrenceProfile {
                 continue;
             };
 
-            let formula = formula.to_string();
-
-            if formula.trim().is_empty() {
-                continue;
-            }
-
             profile.records_with_formula += 1;
 
-            let elements = element_symbols_in_formula(&formula);
+            let elements = element_symbols_in_formula(formula);
 
             profile.observe_elements(&elements);
         }

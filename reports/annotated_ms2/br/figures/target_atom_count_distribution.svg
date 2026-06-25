@@ -59,20 +59,60 @@ Number of Br atoms in formula
 0
 </text>
 <polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="120,710 120,715 "/>
-<text x="644" y="720" dy="0.76em" text-anchor="middle" font-family="sans-serif" font-size="9.67741935483871" opacity="1" fill="#000000">
+<text x="269" y="720" dy="0.76em" text-anchor="middle" font-family="sans-serif" font-size="9.67741935483871" opacity="1" fill="#000000">
 1
 </text>
-<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="644,710 644,715 "/>
-<text x="1169" y="720" dy="0.76em" text-anchor="middle" font-family="sans-serif" font-size="9.67741935483871" opacity="1" fill="#000000">
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="269,710 269,715 "/>
+<text x="419" y="720" dy="0.76em" text-anchor="middle" font-family="sans-serif" font-size="9.67741935483871" opacity="1" fill="#000000">
 2
 </text>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="419,710 419,715 "/>
+<text x="569" y="720" dy="0.76em" text-anchor="middle" font-family="sans-serif" font-size="9.67741935483871" opacity="1" fill="#000000">
+3
+</text>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="569,710 569,715 "/>
+<text x="719" y="720" dy="0.76em" text-anchor="middle" font-family="sans-serif" font-size="9.67741935483871" opacity="1" fill="#000000">
+4
+</text>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="719,710 719,715 "/>
+<text x="869" y="720" dy="0.76em" text-anchor="middle" font-family="sans-serif" font-size="9.67741935483871" opacity="1" fill="#000000">
+5
+</text>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="869,710 869,715 "/>
+<text x="1019" y="720" dy="0.76em" text-anchor="middle" font-family="sans-serif" font-size="9.67741935483871" opacity="1" fill="#000000">
+6
+</text>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="1019,710 1019,715 "/>
+<text x="1169" y="720" dy="0.76em" text-anchor="middle" font-family="sans-serif" font-size="9.67741935483871" opacity="1" fill="#000000">
+7
+</text>
 <polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="1169,710 1169,715 "/>
-<rect x="120" y="150" width="524" height="559" opacity="0.6" fill="#0000FF" stroke="none"/>
-<rect x="644" y="704" width="525" height="5" opacity="0.6" fill="#0000FF" stroke="none"/>
+<rect x="120" y="150" width="149" height="559" opacity="0.6" fill="#0000FF" stroke="none"/>
+<rect x="269" y="704" width="150" height="5" opacity="0.6" fill="#0000FF" stroke="none"/>
+<rect x="419" y="709" width="150" height="0" opacity="0.6" fill="#0000FF" stroke="none"/>
+<rect x="569" y="709" width="150" height="0" opacity="0.6" fill="#0000FF" stroke="none"/>
+<rect x="719" y="709" width="150" height="0" opacity="0.6" fill="#0000FF" stroke="none"/>
+<rect x="869" y="709" width="150" height="0" opacity="0.6" fill="#0000FF" stroke="none"/>
+<rect x="1019" y="709" width="150" height="0" opacity="0.6" fill="#0000FF" stroke="none"/>
 <text x="120" y="142" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
 439k (99.1%)
 </text>
-<text x="644" y="696" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
-4.2k (0.9%)
+<text x="269" y="696" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
+3.9k (0.9%)
+</text>
+<text x="419" y="701" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
+224 (0.1%)
+</text>
+<text x="569" y="701" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
+13 (0.0%)
+</text>
+<text x="719" y="701" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
+14 (0.0%)
+</text>
+<text x="869" y="701" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
+8 (0.0%)
+</text>
+<text x="1019" y="701" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
+4 (0.0%)
 </text>
 </svg>

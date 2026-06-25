@@ -1,4 +1,9 @@
-use std::{cmp::Ordering, collections::BTreeMap, fmt::Debug, path::Path};
+use std::{
+    cmp::Ordering,
+    collections::{BTreeMap, BTreeSet},
+    fmt::Debug,
+    path::Path,
+};
 
 use plotters::prelude::*;
 
@@ -219,7 +224,25 @@ fn render_atom_count_distribution_chart(
         }))
         .map_err(figure_error)?;
 
+    let mut labeled_atom_counts = distribution
+        .iter()
+        .map(|(atom_count, record_count)| (*atom_count, *record_count))
+        .collect::<Vec<_>>();
+
+    labeled_atom_counts
+        .sort_by(|left, right| right.1.cmp(&left.1).then_with(|| left.0.cmp(&right.0)));
+
+    let labeled_atom_counts = labeled_atom_counts
+        .into_iter()
+        .take(15)
+        .map(|(atom_count, _)| atom_count)
+        .collect::<BTreeSet<_>>();
+
     for (atom_count, record_count) in distribution {
+        if !labeled_atom_counts.contains(atom_count) {
+            continue;
+        }
+
         let percent = percent(*record_count, records_with_formula);
 
         chart

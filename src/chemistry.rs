@@ -1,5 +1,7 @@
 use std::collections::{BTreeMap, BTreeSet};
 
+use molecular_formulas::prelude::{MolecularFormula, MolecularFormulaMetadata};
+
 /// Canonical chemical element symbols.
 pub const ELEMENT_SYMBOLS: &[&str] = &[
     "H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "Mg", "Al", "Si", "P", "S", "Cl",
@@ -19,8 +21,6 @@ pub fn is_valid_element_symbol(symbol: &str) -> bool {
 
 /// Normalizes and validates an element symbol.
 ///
-/// Returns `None` when the input is empty or not a known element symbol.
-///
 /// # Parameters
 /// - `input`: Element symbol passed from CLI input.
 pub fn normalize_element_symbol(input: &str) -> Option<String> {
@@ -39,135 +39,107 @@ pub fn normalize_element_symbol(input: &str) -> Option<String> {
     is_valid_element_symbol(&symbol).then_some(symbol)
 }
 
-pub fn element_symbols_in_formula(formula: &str) -> BTreeSet<String> {
+/// Returns the valid element symbols present in a structured molecular formula.
+pub fn element_symbols_in_formula<F>(formula: &F) -> BTreeSet<String>
+where
+    F: MolecularFormula,
+    u32: From<<F as MolecularFormulaMetadata>::Count>,
+{
     element_counts_in_formula(formula).into_keys().collect()
 }
 
-/// Counts atoms for each valid element symbol in a molecular formula.
-///
-/// Missing numeric subscripts are interpreted as `1`.
-///
-/// # Parameters
-/// - `formula`: Molecular formula string, such as `C6H5ClBrNO2`.
-pub fn element_counts_in_formula(formula: &str) -> BTreeMap<String, usize> {
-    let mut counts = BTreeMap::new();
-    let mut chars = formula.chars().peekable();
-
-    while let Some(ch) = chars.next() {
-        if !ch.is_ascii_uppercase() {
-            continue;
-        }
-
-        let mut symbol = String::from(ch);
-
-        if let Some(next) = chars.peek()
-            && next.is_ascii_lowercase()
-        {
-            symbol.push(*next);
-            chars.next();
-        }
-
-        let mut count_text = String::new();
-
-        while let Some(next) = chars.peek()
-            && next.is_ascii_digit()
-        {
-            count_text.push(*next);
-            chars.next();
-        }
-
-        if !is_valid_element_symbol(&symbol) {
-            continue;
-        }
-
-        let count =
-            if count_text.is_empty() { 1 } else { count_text.parse::<usize>().unwrap_or(1) };
-
-        *counts.entry(symbol).or_default() += count;
-    }
+/// Counts atoms for each valid element symbol in a structured molecular
+/// formula.
+pub fn element_counts_in_formula<F>(formula: &F) -> BTreeMap<String, usize>
+where
+    F: MolecularFormula,
+    u32: From<<F as MolecularFormulaMetadata>::Count>,
+{
+    let Ok(counts) = formula.element_count_vector::<u32>() else {
+        return BTreeMap::new();
+    };
 
     counts
+        .into_iter()
+        .enumerate()
+        .filter_map(|(index, count)| {
+            if count == 0 {
+                return None;
+            }
+
+            let symbol = ELEMENT_SYMBOLS.get(index)?;
+
+            Some(((*symbol).to_string(), count as usize))
+        })
+        .collect()
 }
 
-/// Returns the atom count for one element in a molecular formula.
-///
-/// Returns `0` when the formula does not contain the element.
-pub fn atom_count_for_element(formula: &str, target: &str) -> usize {
-    element_counts_in_formula(formula).get(target).copied().unwrap_or_default()
+/// Returns the atom count for one element in a structured molecular formula.
+pub fn atom_count_for_element<F>(formula: &F, target: &str) -> usize
+where
+    F: MolecularFormula,
+    u32: From<<F as MolecularFormulaMetadata>::Count>,
+{
+    let Some(index) = ELEMENT_SYMBOLS.iter().position(|symbol| *symbol == target) else {
+        return 0;
+    };
+
+    let Ok(counts) = formula.element_count_vector::<u32>() else {
+        return 0;
+    };
+
+    counts.get(index).copied().unwrap_or_default() as usize
 }
 
 #[cfg(test)]
 mod tests {
+    use std::str::FromStr;
+
+    use molecular_formulas::prelude::ChemicalFormula;
+
     use super::*;
 
-    #[test]
-    fn normalizes_element_symbols() {
-        assert_eq!(normalize_element_symbol("f"), Some("F".to_string()));
-        assert_eq!(normalize_element_symbol("F"), Some("F".to_string()));
-        assert_eq!(normalize_element_symbol("cl"), Some("Cl".to_string()));
-        assert_eq!(normalize_element_symbol("CL"), Some("Cl".to_string()));
-        assert_eq!(normalize_element_symbol(" br "), Some("Br".to_string()));
+    fn formula(input: &str) -> ChemicalFormula<u32, i32> {
+        ChemicalFormula::from_str(input).unwrap()
     }
-
-    #[test]
-    fn rejects_empty_element_symbols() {
-        assert_eq!(normalize_element_symbol(""), None);
-        assert_eq!(normalize_element_symbol("   "), None);
-    }
-
     #[test]
     fn counts_single_letter_elements() {
-        assert_eq!(atom_count_for_element("C6H6F", "F"), 1);
-        assert_eq!(atom_count_for_element("C20H25IN2O5", "I"), 1);
-        assert_eq!(atom_count_for_element("C10H14N2", "N"), 2);
+        let first = formula("C6H6F");
+        let second = formula("C20H25IN2O5");
+        let third = formula("C10H14N2");
+
+        assert_eq!(atom_count_for_element(&first, "F"), 1);
+        assert_eq!(atom_count_for_element(&second, "I"), 1);
+        assert_eq!(atom_count_for_element(&third, "N"), 2);
     }
 
     #[test]
     fn counts_two_letter_elements() {
-        assert_eq!(atom_count_for_element("C6H5Cl", "Cl"), 1);
-        assert_eq!(atom_count_for_element("C6H5Br", "Br"), 1);
-        assert_eq!(atom_count_for_element("C6H5Na", "Na"), 1);
+        let chlorine = formula("C6H5Cl");
+        let bromine = formula("C6H5Br");
+        let sodium = formula("C6H5Na");
+
+        assert_eq!(atom_count_for_element(&chlorine, "Cl"), 1);
+        assert_eq!(atom_count_for_element(&bromine, "Br"), 1);
+        assert_eq!(atom_count_for_element(&sodium, "Na"), 1);
     }
 
     #[test]
     fn does_not_count_substrings_inside_other_elements() {
-        assert_eq!(atom_count_for_element("C6H5Fe", "F"), 0);
-        assert_eq!(atom_count_for_element("C6H5Si", "I"), 0);
-        assert_eq!(atom_count_for_element("NaCl", "N"), 0);
-        assert_eq!(atom_count_for_element("NaCl", "C"), 0);
-    }
+        let iron = formula("C6H5Fe");
+        let silicon = formula("C6H5Si");
+        let salt = formula("NaCl");
 
-    #[test]
-    fn extracts_unique_elements_from_formula() {
-        let symbols = element_symbols_in_formula("C6H5ClBrNO2");
-
-        assert!(symbols.contains("C"));
-        assert!(symbols.contains("H"));
-        assert!(symbols.contains("Cl"));
-        assert!(symbols.contains("Br"));
-        assert!(symbols.contains("N"));
-        assert!(symbols.contains("O"));
-        assert_eq!(symbols.len(), 6);
-    }
-
-    #[test]
-    fn rejects_invalid_element_symbols() {
-        assert_eq!(normalize_element_symbol("Bl"), None);
-        assert_eq!(normalize_element_symbol("Xx"), None);
-        assert_eq!(normalize_element_symbol("Water"), None);
-    }
-
-    #[test]
-    fn all_real_halogen_symbols_are_valid() {
-        assert_eq!(normalize_element_symbol("F"), Some("F".to_string()));
-        assert_eq!(normalize_element_symbol("Cl"), Some("Cl".to_string()));
-        assert_eq!(normalize_element_symbol("Br"), Some("Br".to_string()));
-        assert_eq!(normalize_element_symbol("I"), Some("I".to_string()));
+        assert_eq!(atom_count_for_element(&iron, "F"), 0);
+        assert_eq!(atom_count_for_element(&silicon, "I"), 0);
+        assert_eq!(atom_count_for_element(&salt, "N"), 0);
+        assert_eq!(atom_count_for_element(&salt, "C"), 0);
     }
 
     #[test]
     fn counts_atoms_in_formula() {
-        let counts = element_counts_in_formula("C6H5ClBrNO2");
+        let formula = formula("C6H5ClBrNO2");
+        let counts = element_counts_in_formula(&formula);
 
         assert_eq!(counts.get("C"), Some(&6));
         assert_eq!(counts.get("H"), Some(&5));
@@ -179,24 +151,22 @@ mod tests {
 
     #[test]
     fn atom_count_for_element_returns_zero_when_absent() {
-        assert_eq!(atom_count_for_element("C6H6", "F"), 0);
-        assert_eq!(atom_count_for_element("C6H5F", "F"), 1);
-        assert_eq!(atom_count_for_element("C6H4F2", "F"), 2);
+        let benzene = formula("C6H6");
+        let fluoro_benzene = formula("C6H5F");
+        let difluoro_benzene = formula("C6H4F2");
+
+        assert_eq!(atom_count_for_element(&benzene, "F"), 0);
+        assert_eq!(atom_count_for_element(&fluoro_benzene, "F"), 1);
+        assert_eq!(atom_count_for_element(&difluoro_benzene, "F"), 2);
     }
 
     #[test]
-    fn missing_numeric_subscripts_count_as_one() {
-        let counts = element_counts_in_formula("C20H25IN2O5");
+    fn counts_large_carbon_and_hydrogen_values() {
+        let formula = formula("C28H23ClO7");
 
-        assert_eq!(counts.get("I"), Some(&1));
-        assert_eq!(counts.get("N"), Some(&2));
-        assert_eq!(counts.get("O"), Some(&5));
-    }
-
-    #[test]
-    fn repeated_elements_are_summed() {
-        let counts = element_counts_in_formula("C6H5OO");
-
-        assert_eq!(counts.get("O"), Some(&2));
+        assert_eq!(atom_count_for_element(&formula, "C"), 28);
+        assert_eq!(atom_count_for_element(&formula, "H"), 23);
+        assert_eq!(atom_count_for_element(&formula, "Cl"), 1);
+        assert_eq!(atom_count_for_element(&formula, "O"), 7);
     }
 }

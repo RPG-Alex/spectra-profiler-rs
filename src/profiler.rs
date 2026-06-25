@@ -50,17 +50,15 @@ pub fn profile_dataset(
         let ion_mode = optional_debug_label(record.ion_mode());
         let source_instrument = optional_debug_label(record.source_instrument());
 
-        let formula = metadata.formula().map(ToString::to_string).unwrap_or_default();
-
-        let target_atom_count = if formula.is_empty() {
-            0
-        } else {
+        let target_atom_count = if let Some(formula) = metadata.formula() {
             records_with_formula += 1;
 
-            let atom_count = atom_count_for_element(&formula, target_element);
+            let atom_count = atom_count_for_element(formula, target_element);
             *target_atom_count_distribution.entry(atom_count).or_default() += 1;
 
             atom_count
+        } else {
+            0
         };
 
         let contains_target_element = target_atom_count > 0;
