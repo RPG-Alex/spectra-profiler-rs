@@ -38,8 +38,6 @@ impl ReportPaths {
 
 /// Writes the top-level generated reports index.
 ///
-/// The index links to every dataset-level report README under `reports/`.
-///
 /// # Parameters
 /// - `reports_dir`: Directory containing generated dataset report folders.
 /// - `index_path`: Path to the top-level reports index file.

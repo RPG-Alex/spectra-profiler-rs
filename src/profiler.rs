@@ -1,22 +1,20 @@
 use std::collections::BTreeMap;
 
-use mascot_rs::prelude::*;
 use serde::Serialize;
 
 use crate::{
-    chemistry::atom_count_for_element,
     error::Result,
-    metadata::{metadata_value, optional_debug_label},
     population::{
         PopulationMap, increment_pipe_population, increment_population, summarize_population_map,
         write_population_map_csv,
     },
+    records::LoadedDataset,
     reports::ReportPaths,
     visuals::{write_atom_count_distribution_figure, write_standard_population_figures},
 };
 
 pub fn profile_dataset(
-    spectra: &MGFVec<f64>,
+    dataset: &LoadedDataset,
     target_element: &str,
     reports: &ReportPaths,
 ) -> Result<()> {
@@ -26,64 +24,30 @@ pub fn profile_dataset(
 
     let mut target_atom_count_distribution = BTreeMap::<usize, usize>::new();
 
-    let mut by_npc_pathways = PopulationMap::new();
-    let mut by_npc_superclasses = PopulationMap::new();
-    let mut by_npc_classes = PopulationMap::new();
-    let mut by_source_dataset = PopulationMap::new();
-    let mut by_organism = PopulationMap::new();
-    let mut by_ion_mode = PopulationMap::new();
-    let mut by_source_instrument = PopulationMap::new();
-    let mut by_library_quality = PopulationMap::new();
+    let mut population_maps = BTreeMap::<String, PopulationMap>::new();
 
-    for record in spectra.iter() {
+    for record in &dataset.records {
         total_records += 1;
+        records_with_formula += 1;
 
-        let metadata = record.metadata();
+        let target_atom_count = record.atom_count(target_element);
+        *target_atom_count_distribution.entry(target_atom_count).or_default() += 1;
 
-        let source_dataset = metadata_value(metadata, "SOURCE_DATASET");
-        let organism = metadata_value(metadata, "ORGANISM");
-        let npc_pathways = metadata_value(metadata, "NPC_PATHWAYS");
-        let npc_superclasses = metadata_value(metadata, "NPC_SUPERCLASSES");
-        let npc_classes = metadata_value(metadata, "NPC_CLASSES");
-        let library_quality = metadata_value(metadata, "LIBRARYQUALITY");
-
-        let ion_mode = optional_debug_label(record.ion_mode());
-        let source_instrument = optional_debug_label(record.source_instrument());
-
-        let target_atom_count = if let Some(formula) = metadata.formula() {
-            records_with_formula += 1;
-
-            let atom_count = atom_count_for_element(formula, target_element);
-            *target_atom_count_distribution.entry(atom_count).or_default() += 1;
-
-            atom_count
-        } else {
-            0
-        };
-
-        let contains_target_element = target_atom_count > 0;
+        let contains_target_element = record.contains_element(target_element);
 
         if contains_target_element {
             records_with_target_element += 1;
         }
 
-        increment_pipe_population(&mut by_npc_pathways, &npc_pathways, contains_target_element);
-        increment_pipe_population(
-            &mut by_npc_superclasses,
-            &npc_superclasses,
-            contains_target_element,
-        );
-        increment_pipe_population(&mut by_npc_classes, &npc_classes, contains_target_element);
+        for (metadata_group, value) in &record.metadata {
+            let counts = population_maps.entry(metadata_group.clone()).or_default();
 
-        increment_population(&mut by_source_dataset, &source_dataset, contains_target_element);
-        increment_population(&mut by_organism, &organism, contains_target_element);
-        increment_population(&mut by_ion_mode, &ion_mode, contains_target_element);
-        increment_population(
-            &mut by_source_instrument,
-            &source_instrument,
-            contains_target_element,
-        );
-        increment_population(&mut by_library_quality, &library_quality, contains_target_element);
+            if value.contains('|') {
+                increment_pipe_population(counts, value, contains_target_element);
+            } else {
+                increment_population(counts, value, contains_target_element);
+            }
+        }
     }
 
     write_summary_csv(
@@ -107,84 +71,28 @@ pub fn profile_dataset(
         records_with_formula,
         &target_atom_count_distribution,
     )?;
+    for (metadata_group, counts) in &population_maps {
+        let stem = population_stem(metadata_group);
 
-    write_population_outputs(
-        reports,
-        "npc_pathways",
-        &format!("{target_element} by NPC pathways"),
-        &by_npc_pathways,
-        total_records,
-        records_with_target_element,
-    )?;
-
-    write_population_outputs(
-        reports,
-        "npc_superclasses",
-        &format!("{target_element} by NPC superclasses"),
-        &by_npc_superclasses,
-        total_records,
-        records_with_target_element,
-    )?;
-
-    write_population_outputs(
-        reports,
-        "npc_classes",
-        &format!("{target_element} by NPC classes"),
-        &by_npc_classes,
-        total_records,
-        records_with_target_element,
-    )?;
-
-    write_population_outputs(
-        reports,
-        "source_dataset",
-        &format!("{target_element} by source dataset"),
-        &by_source_dataset,
-        total_records,
-        records_with_target_element,
-    )?;
-
-    write_population_outputs(
-        reports,
-        "organism",
-        &format!("{target_element} by organism"),
-        &by_organism,
-        total_records,
-        records_with_target_element,
-    )?;
-
-    write_population_outputs(
-        reports,
-        "ion_mode",
-        &format!("{target_element} by ion mode"),
-        &by_ion_mode,
-        total_records,
-        records_with_target_element,
-    )?;
-
-    write_population_outputs(
-        reports,
-        "source_instrument",
-        &format!("{target_element} by source instrument"),
-        &by_source_instrument,
-        total_records,
-        records_with_target_element,
-    )?;
-
-    write_population_outputs(
-        reports,
-        "library_quality",
-        &format!("{target_element} by library quality"),
-        &by_library_quality,
-        total_records,
-        records_with_target_element,
-    )?;
+        write_population_outputs(
+            reports,
+            &stem,
+            &format!("{target_element} by {metadata_group}"),
+            counts,
+            total_records,
+            records_with_target_element,
+        )?;
+    }
 
     println!("Total records: {total_records}");
     println!("Records with formula: {records_with_formula}");
     println!("Records with {target_element}: {records_with_target_element}");
 
     Ok(())
+}
+
+fn population_stem(metadata_group: &str) -> String {
+    metadata_group.to_ascii_lowercase().replace(' ', "_").replace('/', "_")
 }
 
 fn write_population_outputs(

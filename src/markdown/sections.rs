@@ -69,7 +69,16 @@ pub(super) const REPORT_SECTIONS: &[ReportSection] = &[
     },
 ];
 
-pub(super) fn write_population_section(file: &mut File, section: &ReportSection) -> Result<()> {
+pub(super) fn write_population_section(
+    file: &mut File,
+    reports: &crate::reports::ReportPaths,
+    section: &ReportSection,
+) -> Result<()> {
+    let csv_path = reports.table(&format!("contains_by_{}.csv", section.stem));
+
+    if !csv_path.exists() {
+        return Ok(());
+    }
     let table_path = format!("tables/contains_by_{}.csv", section.stem);
     let count_figure_path = format!("figures/top_{}_by_target_count.svg", section.stem);
     let percent_figure_path = format!("figures/top_{}_by_percent_target.svg", section.stem);

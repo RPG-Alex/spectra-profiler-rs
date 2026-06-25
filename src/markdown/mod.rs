@@ -39,7 +39,7 @@ pub fn write_markdown_report(
     write_report_links(&mut file)?;
 
     for section in REPORT_SECTIONS {
-        write_population_section(&mut file, section)?;
+        write_population_section(&mut file, reports, section)?;
     }
 
     Ok(())

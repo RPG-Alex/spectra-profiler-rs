@@ -148,7 +148,13 @@ fn read_warning_summary(reports: &ReportPaths) -> Result<Vec<WarningSummary>> {
 }
 
 fn read_population_rows(reports: &ReportPaths, filename: &str) -> Result<Vec<PopulationCsvRow>> {
-    let mut reader = csv::Reader::from_path(reports.table(filename))?;
+    let path = reports.table(filename);
+
+    if !path.exists() {
+        return Ok(Vec::new());
+    }
+
+    let mut reader = csv::Reader::from_path(path)?;
     let rows =
         reader.deserialize::<PopulationCsvRow>().collect::<std::result::Result<Vec<_>, _>>()?;
 

@@ -5,13 +5,12 @@ use std::{
     path::Path,
 };
 
-use mascot_rs::prelude::*;
 use plotters::prelude::*;
 use serde::Serialize;
 
 use crate::{
-    chemistry::element_symbols_in_formula,
     error::{Result, SpectraProfilerError},
+    records::LoadedDataset,
     reports::ReportPaths,
 };
 
@@ -49,12 +48,12 @@ struct ConditionalProbabilityRow {
 /// Writes dataset-level element co-occurrence reports.
 pub fn write_cooccurrence_reports(
     dataset_name: &str,
-    spectra: &MGFVec<f64>,
+    dataset: &LoadedDataset,
     reports: &ReportPaths,
     dataset_reports_root: impl AsRef<Path>,
     reported_elements: &[String],
 ) -> Result<()> {
-    let profile = CooccurrenceProfile::from_spectra(spectra);
+    let profile = CooccurrenceProfile::from_dataset(dataset);
     let heatmap_elements = profile.heatmap_elements();
 
     write_element_counts_csv(&profile, reports)?;
@@ -87,19 +86,14 @@ pub fn write_cooccurrence_reports(
 }
 
 impl CooccurrenceProfile {
-    fn from_spectra(spectra: &MGFVec<f64>) -> Self {
+    fn from_dataset(dataset: &LoadedDataset) -> Self {
         let mut profile = Self::default();
 
-        for record in spectra.iter() {
+        for record in &dataset.records {
             profile.total_records += 1;
-
-            let Some(formula) = record.metadata().formula() else {
-                continue;
-            };
-
             profile.records_with_formula += 1;
 
-            let elements = element_symbols_in_formula(formula);
+            let elements = record.element_counts.keys().cloned().collect::<BTreeSet<_>>();
 
             profile.observe_elements(&elements);
         }
@@ -162,10 +156,12 @@ fn write_element_counts_csv(profile: &CooccurrenceProfile, reports: &ReportPaths
     let mut rows = profile
         .element_counts
         .iter()
-        .map(|(element, count)| ElementCountRow {
-            element: element.clone(),
-            count: *count,
-            percent_of_records: percent(*count, profile.records_with_formula),
+        .map(|(element, count)| {
+            ElementCountRow {
+                element: element.clone(),
+                count: *count,
+                percent_of_records: percent(*count, profile.records_with_formula),
+            }
         })
         .collect::<Vec<_>>();
 

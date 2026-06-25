@@ -21,6 +21,8 @@ serde = "1.0.228"
 tempfile = "3.27.0"
 thiserror = "2.0.18"
 tokio = { version = "1.52.3", features = ["macros", "rt-multi-thread"] }
+smiles-parser = { git = "https://github.com/earth-metabolome-initiative/smiles-parser", features = ["datasets"] }
+flate2 = "1.1.9"
 
 [lints.rust]
 unused_macro_rules = "forbid"

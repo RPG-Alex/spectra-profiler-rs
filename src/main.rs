@@ -7,18 +7,18 @@ mod markdown;
 mod metadata;
 mod population;
 mod profiler;
+mod records;
 mod reports;
 mod visuals;
 
 use std::collections::BTreeSet;
 
-use chemistry::element_symbols_in_formula;
 use config::{ProfileConfig, TargetSelection};
 use cooccurence::write_cooccurrence_reports;
 use datasets::load_dataset;
 use markdown::write_markdown_report;
-use mascot_rs::prelude::*;
 use profiler::profile_dataset;
+use records::LoadedDataset;
 use reports::{ReportPaths, write_reports_index};
 
 use crate::error::Result;
@@ -29,13 +29,14 @@ async fn main() -> Result<()> {
 
     println!("Dataset: {}", config.dataset_name);
 
-    let spectra = load_dataset(&config.dataset_source, &config.cache_dir).await?;
+    let dataset =
+        load_dataset(&config.dataset_name, &config.dataset_source, &config.cache_dir).await?;
 
-    println!("Loaded {} spectra", spectra.len());
+    println!("Loaded {} records", dataset.len());
 
     let target_elements = match &config.target_selection {
         TargetSelection::One(target_element) => vec![target_element.clone()],
-        TargetSelection::AllObserved => observed_elements(&spectra),
+        TargetSelection::AllObserved => observed_elements(&dataset),
     };
 
     println!("Target elements: {}", target_elements.join(", "));
@@ -49,7 +50,7 @@ async fn main() -> Result<()> {
 
     write_cooccurrence_reports(
         &config.dataset_name,
-        &spectra,
+        &dataset,
         &cooccurrence_report_paths,
         &config.reports_root,
         &target_elements,
@@ -62,7 +63,7 @@ async fn main() -> Result<()> {
         println!("Profiling target element: {target_element}");
         println!("Report directory: {}", report_paths.root.display());
 
-        profile_dataset(&spectra, &target_element, &report_paths)?;
+        profile_dataset(&dataset, &target_element, &report_paths)?;
 
         write_markdown_report(&config.dataset_name, &target_element, &report_paths)?;
 
@@ -76,16 +77,12 @@ async fn main() -> Result<()> {
     Ok(())
 }
 
-fn observed_elements(spectra: &MGFVec<f64>) -> Vec<String> {
+fn observed_elements(dataset: &LoadedDataset) -> Vec<String> {
     let mut elements = BTreeSet::new();
 
-    for record in spectra.iter() {
-        let Some(formula) = record.metadata().formula() else {
-            continue;
-        };
-
-        for element in element_symbols_in_formula(formula) {
-            elements.insert(element);
+    for record in &dataset.records {
+        for element in record.element_counts.keys() {
+            elements.insert(element.clone());
         }
     }
 
