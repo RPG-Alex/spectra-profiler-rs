@@ -2,7 +2,6 @@
 
 This report summarizes how often the target element `H` appears across metadata groups in `annotated_ms2`.
 
-
 ## How to interpret this report
 
 This report treats each spectrum as **positive** when its molecular formula contains the target element `H`. A spectrum is **negative** when its formula does not contain `H`.
@@ -37,6 +36,15 @@ Important caveats:
 | Positive count | 443900 |
 | Negative count | 5 |
 | Positive percentage | 99.9989% |
+
+## Atom-count distribution
+
+This section shows how many formula-bearing spectra have exactly `k` atoms of `H`.
+The `0` row represents formulas that do not contain `H`.
+
+[CSV table](tables/target_atom_count_distribution.csv)
+
+<img src="figures/target_atom_count_distribution.svg" alt="H atom-count distribution" />
 
 ## Top enriched groups
 
@@ -73,6 +81,7 @@ Warning meanings:
 |---|---:|
 | `LOW_TARGET_SUPPORT` | 140 |
 | `LOW_TOTAL_SUPPORT` | 204 |
+
 ## Summary
 
 - [Summary table](tables/summary.csv)

@@ -1,7 +1,10 @@
+use std::collections::BTreeMap;
+
 use mascot_rs::prelude::*;
+use serde::Serialize;
 
 use crate::{
-    chemistry::contains_element,
+    chemistry::atom_count_for_element,
     error::Result,
     metadata::{metadata_value, optional_debug_label},
     population::{
@@ -9,7 +12,7 @@ use crate::{
         write_population_map_csv,
     },
     reports::ReportPaths,
-    visuals::write_standard_population_figures,
+    visuals::{write_atom_count_distribution_figure, write_standard_population_figures},
 };
 
 pub fn profile_dataset(
@@ -20,6 +23,8 @@ pub fn profile_dataset(
     let mut total_records = 0usize;
     let mut records_with_formula = 0usize;
     let mut records_with_target_element = 0usize;
+
+    let mut target_atom_count_distribution = BTreeMap::<usize, usize>::new();
 
     let mut by_npc_pathways = PopulationMap::new();
     let mut by_npc_superclasses = PopulationMap::new();
@@ -47,11 +52,18 @@ pub fn profile_dataset(
 
         let formula = metadata.formula().map(ToString::to_string).unwrap_or_default();
 
-        if !formula.is_empty() {
+        let target_atom_count = if formula.is_empty() {
+            0
+        } else {
             records_with_formula += 1;
-        }
 
-        let contains_target_element = contains_element(&formula, target_element);
+            let atom_count = atom_count_for_element(&formula, target_element);
+            *target_atom_count_distribution.entry(atom_count).or_default() += 1;
+
+            atom_count
+        };
+
+        let contains_target_element = target_atom_count > 0;
 
         if contains_target_element {
             records_with_target_element += 1;
@@ -82,6 +94,20 @@ pub fn profile_dataset(
         records_with_formula,
         records_with_target_element,
         target_element,
+    )?;
+
+    write_atom_count_distribution_csv(
+        reports,
+        target_element,
+        records_with_formula,
+        &target_atom_count_distribution,
+    )?;
+
+    write_atom_count_distribution_figure(
+        reports,
+        target_element,
+        records_with_formula,
+        &target_atom_count_distribution,
     )?;
 
     write_population_outputs(
@@ -207,6 +233,46 @@ fn write_summary_csv(
     Ok(())
 }
 
+#[derive(Debug, Serialize)]
+struct AtomCountDistributionRow {
+    atom_count: usize,
+    record_count: usize,
+    percent_of_formula_records: f64,
+    contains_target: bool,
+}
+
+fn write_atom_count_distribution_csv(
+    reports: &ReportPaths,
+    target_element: &str,
+    records_with_formula: usize,
+    distribution: &BTreeMap<usize, usize>,
+) -> Result<()> {
+    let mut writer = csv::Writer::from_path(reports.table("target_atom_count_distribution.csv"))?;
+
+    for (atom_count, record_count) in distribution {
+        writer.serialize(AtomCountDistributionRow {
+            atom_count: *atom_count,
+            record_count: *record_count,
+            percent_of_formula_records: percent(*record_count, records_with_formula),
+            contains_target: *atom_count > 0,
+        })?;
+    }
+
+    writer.flush()?;
+
+    println!("Wrote atom-count distribution for {target_element}");
+
+    Ok(())
+}
+
+fn percent(numerator: usize, denominator: usize) -> f64 {
+    if denominator == 0 {
+        return 0.0;
+    }
+
+    numerator as f64 / denominator as f64 * 100.0
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -226,5 +292,27 @@ mod tests {
         assert!(contents.contains("total_records,100"));
         assert!(contents.contains("records_with_formula,95"));
         assert!(contents.contains("records_with_target_element,12"));
+    }
+    #[test]
+    fn write_atom_count_distribution_csv_writes_expected_rows() {
+        let temp_dir = tempfile::tempdir().unwrap();
+        let reports = ReportPaths::prepare(temp_dir.path().join("report")).unwrap();
+
+        let mut distribution = BTreeMap::new();
+        distribution.insert(0, 90);
+        distribution.insert(1, 8);
+        distribution.insert(2, 2);
+
+        write_atom_count_distribution_csv(&reports, "F", 100, &distribution).unwrap();
+
+        let contents =
+            std::fs::read_to_string(reports.table("target_atom_count_distribution.csv")).unwrap();
+
+        assert!(
+            contents.contains("atom_count,record_count,percent_of_formula_records,contains_target")
+        );
+        assert!(contents.contains("0,90,90.0,false"));
+        assert!(contents.contains("1,8,8.0,true"));
+        assert!(contents.contains("2,2,2.0,true"));
     }
 }

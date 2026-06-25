@@ -2,7 +2,6 @@
 
 This report summarizes how often the target element `P` appears across metadata groups in `annotated_ms2`.
 
-
 ## How to interpret this report
 
 This report treats each spectrum as **positive** when its molecular formula contains the target element `P`. A spectrum is **negative** when its formula does not contain `P`.
@@ -37,6 +36,15 @@ Important caveats:
 | Positive count | 15524 |
 | Negative count | 428381 |
 | Positive percentage | 3.4971% |
+
+## Atom-count distribution
+
+This section shows how many formula-bearing spectra have exactly `k` atoms of `P`.
+The `0` row represents formulas that do not contain `P`.
+
+[CSV table](tables/target_atom_count_distribution.csv)
+
+<img src="figures/target_atom_count_distribution.svg" alt="P atom-count distribution" />
 
 ## Top enriched groups
 
@@ -74,6 +82,7 @@ Warning meanings:
 | `LOW_TARGET_SUPPORT` | 54 |
 | `LOW_TOTAL_SUPPORT` | 204 |
 | `NO_TARGET_POSITIVES` | 496 |
+
 ## Summary
 
 - [Summary table](tables/summary.csv)

@@ -2,7 +2,6 @@
 
 This report summarizes how often the target element `F` appears across metadata groups in `annotated_ms2`.
 
-
 ## How to interpret this report
 
 This report treats each spectrum as **positive** when its molecular formula contains the target element `F`. A spectrum is **negative** when its formula does not contain `F`.
@@ -37,6 +36,15 @@ Important caveats:
 | Positive count | 40395 |
 | Negative count | 403510 |
 | Positive percentage | 9.0999% |
+
+## Atom-count distribution
+
+This section shows how many formula-bearing spectra have exactly `k` atoms of `F`.
+The `0` row represents formulas that do not contain `F`.
+
+[CSV table](tables/target_atom_count_distribution.csv)
+
+<img src="figures/target_atom_count_distribution.svg" alt="F atom-count distribution" />
 
 ## Top enriched groups
 
@@ -74,6 +82,7 @@ Warning meanings:
 | `LOW_TARGET_SUPPORT` | 44 |
 | `LOW_TOTAL_SUPPORT` | 204 |
 | `NO_TARGET_POSITIVES` | 481 |
+
 ## Summary
 
 - [Summary table](tables/summary.csv)

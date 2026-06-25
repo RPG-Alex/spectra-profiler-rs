@@ -2,7 +2,6 @@
 
 This report summarizes how often the target element `Co` appears across metadata groups in `annotated_ms2`.
 
-
 ## How to interpret this report
 
 This report treats each spectrum as **positive** when its molecular formula contains the target element `Co`. A spectrum is **negative** when its formula does not contain `Co`.
@@ -37,6 +36,15 @@ Important caveats:
 | Positive count | 16 |
 | Negative count | 443889 |
 | Positive percentage | 0.0036% |
+
+## Atom-count distribution
+
+This section shows how many formula-bearing spectra have exactly `k` atoms of `Co`.
+The `0` row represents formulas that do not contain `Co`.
+
+[CSV table](tables/target_atom_count_distribution.csv)
+
+<img src="figures/target_atom_count_distribution.svg" alt="Co atom-count distribution" />
 
 ## Top enriched groups
 
@@ -73,6 +81,7 @@ Warning meanings:
 |---|---:|
 | `LOW_TOTAL_SUPPORT` | 204 |
 | `NO_TARGET_POSITIVES` | 665 |
+
 ## Summary
 
 - [Summary table](tables/summary.csv)

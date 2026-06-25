@@ -168,10 +168,12 @@ fn write_element_counts_csv(profile: &CooccurrenceProfile, reports: &ReportPaths
     let mut rows = profile
         .element_counts
         .iter()
-        .map(|(element, count)| ElementCountRow {
-            element: element.clone(),
-            count: *count,
-            percent_of_records: percent(*count, profile.records_with_formula),
+        .map(|(element, count)| {
+            ElementCountRow {
+                element: element.clone(),
+                count: *count,
+                percent_of_records: percent(*count, profile.records_with_formula),
+            }
         })
         .collect::<Vec<_>>();
 

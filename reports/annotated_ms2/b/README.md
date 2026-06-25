@@ -2,7 +2,6 @@
 
 This report summarizes how often the target element `B` appears across metadata groups in `annotated_ms2`.
 
-
 ## How to interpret this report
 
 This report treats each spectrum as **positive** when its molecular formula contains the target element `B`. A spectrum is **negative** when its formula does not contain `B`.
@@ -37,6 +36,15 @@ Important caveats:
 | Positive count | 136 |
 | Negative count | 443769 |
 | Positive percentage | 0.0306% |
+
+## Atom-count distribution
+
+This section shows how many formula-bearing spectra have exactly `k` atoms of `B`.
+The `0` row represents formulas that do not contain `B`.
+
+[CSV table](tables/target_atom_count_distribution.csv)
+
+<img src="figures/target_atom_count_distribution.svg" alt="B atom-count distribution" />
 
 ## Top enriched groups
 
@@ -74,6 +82,7 @@ Warning meanings:
 | `LOW_TARGET_SUPPORT` | 30 |
 | `LOW_TOTAL_SUPPORT` | 204 |
 | `NO_TARGET_POSITIVES` | 629 |
+
 ## Summary
 
 - [Summary table](tables/summary.csv)

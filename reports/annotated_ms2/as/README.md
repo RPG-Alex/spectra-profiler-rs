@@ -2,7 +2,6 @@
 
 This report summarizes how often the target element `As` appears across metadata groups in `annotated_ms2`.
 
-
 ## How to interpret this report
 
 This report treats each spectrum as **positive** when its molecular formula contains the target element `As`. A spectrum is **negative** when its formula does not contain `As`.
@@ -37,6 +36,15 @@ Important caveats:
 | Positive count | 25 |
 | Negative count | 443880 |
 | Positive percentage | 0.0056% |
+
+## Atom-count distribution
+
+This section shows how many formula-bearing spectra have exactly `k` atoms of `As`.
+The `0` row represents formulas that do not contain `As`.
+
+[CSV table](tables/target_atom_count_distribution.csv)
+
+<img src="figures/target_atom_count_distribution.svg" alt="As atom-count distribution" />
 
 ## Top enriched groups
 
@@ -74,6 +82,7 @@ Warning meanings:
 | `LOW_TARGET_SUPPORT` | 23 |
 | `LOW_TOTAL_SUPPORT` | 204 |
 | `NO_TARGET_POSITIVES` | 647 |
+
 ## Summary
 
 - [Summary table](tables/summary.csv)

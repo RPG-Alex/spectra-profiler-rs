@@ -1,0 +1,82 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="0" width="1200" height="800" opacity="1" fill="#FFFFFF" stroke="none"/>
+<text x="600" y="35" dy="0.76em" text-anchor="middle" font-family="sans-serif" font-size="25.806451612903228" opacity="1" fill="#000000">
+Cl atom-count distribution
+</text>
+<text x="30" y="388" dy="0.76em" text-anchor="middle" font-family="sans-serif" font-size="9.67741935483871" opacity="1" fill="#000000" transform="rotate(270, 30, 388)">
+Formula-bearing spectra
+</text>
+<text x="645" y="770" dy="-0.5ex" text-anchor="middle" font-family="sans-serif" font-size="9.67741935483871" opacity="1" fill="#000000">
+Number of Cl atoms in formula
+</text>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="119,66 119,709 "/>
+<text x="110" y="709" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="9.67741935483871" opacity="1" fill="#000000">
+0
+</text>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="114,709 119,709 "/>
+<text x="110" y="642" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="9.67741935483871" opacity="1" fill="#000000">
+50k
+</text>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="114,642 119,642 "/>
+<text x="110" y="575" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="9.67741935483871" opacity="1" fill="#000000">
+100k
+</text>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="114,575 119,575 "/>
+<text x="110" y="508" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="9.67741935483871" opacity="1" fill="#000000">
+150k
+</text>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="114,508 119,508 "/>
+<text x="110" y="441" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="9.67741935483871" opacity="1" fill="#000000">
+200k
+</text>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="114,441 119,441 "/>
+<text x="110" y="374" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="9.67741935483871" opacity="1" fill="#000000">
+250k
+</text>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="114,374 119,374 "/>
+<text x="110" y="307" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="9.67741935483871" opacity="1" fill="#000000">
+300k
+</text>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="114,307 119,307 "/>
+<text x="110" y="240" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="9.67741935483871" opacity="1" fill="#000000">
+350k
+</text>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="114,240 119,240 "/>
+<text x="110" y="173" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="9.67741935483871" opacity="1" fill="#000000">
+400k
+</text>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="114,173 119,173 "/>
+<text x="110" y="106" dy="0.5ex" text-anchor="end" font-family="sans-serif" font-size="9.67741935483871" opacity="1" fill="#000000">
+450k
+</text>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="114,106 119,106 "/>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="120,710 1169,710 "/>
+<text x="120" y="720" dy="0.76em" text-anchor="middle" font-family="sans-serif" font-size="9.67741935483871" opacity="1" fill="#000000">
+0
+</text>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="120,710 120,715 "/>
+<text x="469" y="720" dy="0.76em" text-anchor="middle" font-family="sans-serif" font-size="9.67741935483871" opacity="1" fill="#000000">
+1
+</text>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="469,710 469,715 "/>
+<text x="819" y="720" dy="0.76em" text-anchor="middle" font-family="sans-serif" font-size="9.67741935483871" opacity="1" fill="#000000">
+2
+</text>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="819,710 819,715 "/>
+<text x="1169" y="720" dy="0.76em" text-anchor="middle" font-family="sans-serif" font-size="9.67741935483871" opacity="1" fill="#000000">
+3
+</text>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="1169,710 1169,715 "/>
+<rect x="120" y="150" width="349" height="559" opacity="0.6" fill="#0000FF" stroke="none"/>
+<rect x="469" y="673" width="350" height="36" opacity="0.6" fill="#0000FF" stroke="none"/>
+<rect x="819" y="709" width="350" height="0" opacity="0.6" fill="#0000FF" stroke="none"/>
+<text x="120" y="142" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
+416k (93.9%)
+</text>
+<text x="469" y="665" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
+27k (6.1%)
+</text>
+<text x="819" y="701" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
+218 (0.0%)
+</text>
+</svg>

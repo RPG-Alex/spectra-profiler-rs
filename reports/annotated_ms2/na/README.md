@@ -2,7 +2,6 @@
 
 This report summarizes how often the target element `Na` appears across metadata groups in `annotated_ms2`.
 
-
 ## How to interpret this report
 
 This report treats each spectrum as **positive** when its molecular formula contains the target element `Na`. A spectrum is **negative** when its formula does not contain `Na`.
@@ -37,6 +36,15 @@ Important caveats:
 | Positive count | 514 |
 | Negative count | 443391 |
 | Positive percentage | 0.1158% |
+
+## Atom-count distribution
+
+This section shows how many formula-bearing spectra have exactly `k` atoms of `Na`.
+The `0` row represents formulas that do not contain `Na`.
+
+[CSV table](tables/target_atom_count_distribution.csv)
+
+<img src="figures/target_atom_count_distribution.svg" alt="Na atom-count distribution" />
 
 ## Top enriched groups
 
@@ -74,6 +82,7 @@ Warning meanings:
 | `LOW_TARGET_SUPPORT` | 28 |
 | `LOW_TOTAL_SUPPORT` | 204 |
 | `NO_TARGET_POSITIVES` | 610 |
+
 ## Summary
 
 - [Summary table](tables/summary.csv)
