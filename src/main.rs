@@ -28,19 +28,15 @@ async fn main() -> Result<()> {
 
     println!("Dataset: {}", config.dataset_name);
 
-    // 1. Setup accumulators
     let mut cooccurrence = CooccurrenceProfile::default();
     let mut global_stats = GlobalDatasetStats::default();
     let mut element_profilers: BTreeMap<String, ElementProfilerState> = BTreeMap::new();
     let mut observed_all = BTreeSet::new();
 
-    // 2. Stream the dataset
     process_dataset(&config.dataset_name, &config.dataset_source, &config.cache_dir, |record| {
         cooccurrence.observe(&record);
         global_stats.observe(&record);
 
-        // We only process element-specific logic if the element is present in the
-        // record!
         for element in record.element_counts.keys() {
             observed_all.insert(element.clone());
             let profiler = element_profilers.entry(element.clone()).or_default();
@@ -64,7 +60,6 @@ async fn main() -> Result<()> {
         cooccurrence_report_paths.root.display()
     );
 
-    // 3. Post-stream processing
     write_cooccurrence_reports(
         &config.dataset_name,
         &cooccurrence,
@@ -75,8 +70,7 @@ async fn main() -> Result<()> {
     )?;
 
     for target_element in target_elements {
-        // Ensure a profiler exists even if 0 records had it (in case of
-        // TargetSelection::One)
+
         let profiler = element_profilers.entry(target_element.clone()).or_default();
 
         let report_dir = config.report_dir_for(&target_element);
