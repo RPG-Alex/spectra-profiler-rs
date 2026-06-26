@@ -8,8 +8,8 @@ The reports summarize element presence from molecular formula metadata and shoul
 
 | Metric | Value |
 |---|---:|
-| Total molecules | 123927373 |
-| Molecules with formula metadata | 123927373 |
+| Total molecules | 123930189 |
+| Molecules with formula metadata | 123930189 |
 | Molecules without formula metadata | 0 |
 | Observed elements | 118 |
 
@@ -27,26 +27,26 @@ The following valid chemical elements were observed in molecular formula metadat
 
 | Element | Formula count | % of formula-bearing molecules |
 |---|---:|---:|
-| `H` | 123800307 | 99.90% |
-| `C` | 123716130 | 99.83% |
-| `N` | 110330730 | 89.03% |
-| `O` | 108801680 | 87.79% |
-| `S` | 36179085 | 29.19% |
-| `F` | 25131399 | 20.28% |
-| `Cl` | 21809955 | 17.60% |
-| `Br` | 8575761 | 6.92% |
-| `I` | 2533627 | 2.04% |
-| `P` | 2487055 | 2.01% |
-| `Si` | 1807378 | 1.46% |
-| `B` | 1291822 | 1.04% |
-| `Na` | 409168 | 0.33% |
-| `Ir` | 161633 | 0.13% |
-| `K` | 155096 | 0.13% |
-| `Pt` | 139380 | 0.11% |
-| `Se` | 118114 | 0.10% |
-| `Li` | 116787 | 0.09% |
+| `H` | 123803117 | 99.90% |
+| `C` | 123718939 | 99.83% |
+| `N` | 110333086 | 89.03% |
+| `O` | 108803862 | 87.79% |
+| `S` | 36179922 | 29.19% |
+| `F` | 25132174 | 20.28% |
+| `Cl` | 21810735 | 17.60% |
+| `Br` | 8576070 | 6.92% |
+| `I` | 2533762 | 2.04% |
+| `P` | 2487337 | 2.01% |
+| `Si` | 1807399 | 1.46% |
+| `B` | 1291936 | 1.04% |
+| `Na` | 409200 | 0.33% |
+| `Ir` | 161636 | 0.13% |
+| `K` | 155106 | 0.13% |
+| `Pt` | 139438 | 0.11% |
+| `Se` | 118139 | 0.10% |
+| `Li` | 116808 | 0.09% |
 | `Sn` | 108730 | 0.09% |
-| `Zr` | 106561 | 0.09% |
+| `Zr` | 106560 | 0.09% |
 
 ## Element reports generated in this run
 
@@ -54,67 +54,67 @@ Each element report summarizes metadata groups for molecules whose formulas cont
 
 | Element | Formula count | % of formula-bearing molecules | Report |
 |---|---:|---:|---|
-| `H` | 123800307 | 99.90% | [Open](./h/README.md) |
-| `C` | 123716130 | 99.83% | [Open](./c/README.md) |
-| `N` | 110330730 | 89.03% | [Open](./n/README.md) |
-| `O` | 108801680 | 87.79% | [Open](./o/README.md) |
-| `S` | 36179085 | 29.19% | [Open](./s/README.md) |
-| `F` | 25131399 | 20.28% | [Open](./f/README.md) |
-| `Cl` | 21809955 | 17.60% | [Open](./cl/README.md) |
-| `Br` | 8575761 | 6.92% | [Open](./br/README.md) |
-| `I` | 2533627 | 2.04% | [Open](./i/README.md) |
-| `P` | 2487055 | 2.01% | [Open](./p/README.md) |
-| `Si` | 1807378 | 1.46% | [Open](./si/README.md) |
-| `B` | 1291822 | 1.04% | [Open](./b/README.md) |
-| `Na` | 409168 | 0.33% | [Open](./na/README.md) |
-| `Ir` | 161633 | 0.13% | [Open](./ir/README.md) |
-| `K` | 155096 | 0.13% | [Open](./k/README.md) |
-| `Pt` | 139380 | 0.11% | [Open](./pt/README.md) |
-| `Se` | 118114 | 0.10% | [Open](./se/README.md) |
-| `Li` | 116787 | 0.09% | [Open](./li/README.md) |
+| `H` | 123803117 | 99.90% | [Open](./h/README.md) |
+| `C` | 123718939 | 99.83% | [Open](./c/README.md) |
+| `N` | 110333086 | 89.03% | [Open](./n/README.md) |
+| `O` | 108803862 | 87.79% | [Open](./o/README.md) |
+| `S` | 36179922 | 29.19% | [Open](./s/README.md) |
+| `F` | 25132174 | 20.28% | [Open](./f/README.md) |
+| `Cl` | 21810735 | 17.60% | [Open](./cl/README.md) |
+| `Br` | 8576070 | 6.92% | [Open](./br/README.md) |
+| `I` | 2533762 | 2.04% | [Open](./i/README.md) |
+| `P` | 2487337 | 2.01% | [Open](./p/README.md) |
+| `Si` | 1807399 | 1.46% | [Open](./si/README.md) |
+| `B` | 1291936 | 1.04% | [Open](./b/README.md) |
+| `Na` | 409200 | 0.33% | [Open](./na/README.md) |
+| `Ir` | 161636 | 0.13% | [Open](./ir/README.md) |
+| `K` | 155106 | 0.13% | [Open](./k/README.md) |
+| `Pt` | 139438 | 0.11% | [Open](./pt/README.md) |
+| `Se` | 118139 | 0.10% | [Open](./se/README.md) |
+| `Li` | 116808 | 0.09% | [Open](./li/README.md) |
 | `Sn` | 108730 | 0.09% | [Open](./sn/README.md) |
-| `Zr` | 106561 | 0.09% | [Open](./zr/README.md) |
+| `Zr` | 106560 | 0.09% | [Open](./zr/README.md) |
 | `Y` | 97036 | 0.08% | [Open](./y/README.md) |
 | `Al` | 82180 | 0.07% | [Open](./al/README.md) |
-| `Fe` | 81469 | 0.07% | [Open](./fe/README.md) |
+| `Fe` | 81477 | 0.07% | [Open](./fe/README.md) |
 | `Ti` | 77889 | 0.06% | [Open](./ti/README.md) |
-| `Zn` | 75928 | 0.06% | [Open](./zn/README.md) |
-| `Cu` | 67090 | 0.05% | [Open](./cu/README.md) |
-| `Mg` | 62805 | 0.05% | [Open](./mg/README.md) |
-| `Ni` | 50324 | 0.04% | [Open](./ni/README.md) |
-| `Pd` | 48592 | 0.04% | [Open](./pd/README.md) |
-| `Ca` | 46989 | 0.04% | [Open](./ca/README.md) |
+| `Zn` | 75927 | 0.06% | [Open](./zn/README.md) |
+| `Cu` | 67108 | 0.05% | [Open](./cu/README.md) |
+| `Mg` | 62803 | 0.05% | [Open](./mg/README.md) |
+| `Ni` | 50336 | 0.04% | [Open](./ni/README.md) |
+| `Pd` | 48618 | 0.04% | [Open](./pd/README.md) |
+| `Ca` | 46990 | 0.04% | [Open](./ca/README.md) |
 | `Ge` | 45899 | 0.04% | [Open](./ge/README.md) |
-| `Co` | 45664 | 0.04% | [Open](./co/README.md) |
-| `W` | 43800 | 0.04% | [Open](./w/README.md) |
+| `Co` | 45675 | 0.04% | [Open](./co/README.md) |
+| `W` | 43802 | 0.04% | [Open](./w/README.md) |
 | `V` | 39548 | 0.03% | [Open](./v/README.md) |
-| `Ru` | 38941 | 0.03% | [Open](./ru/README.md) |
+| `Ru` | 38960 | 0.03% | [Open](./ru/README.md) |
 | `As` | 33520 | 0.03% | [Open](./as/README.md) |
 | `Mn` | 30805 | 0.02% | [Open](./mn/README.md) |
-| `Cr` | 27026 | 0.02% | [Open](./cr/README.md) |
-| `Hf` | 21978 | 0.02% | [Open](./hf/README.md) |
+| `Cr` | 27025 | 0.02% | [Open](./cr/README.md) |
+| `Hf` | 21977 | 0.02% | [Open](./hf/README.md) |
 | `U` | 21201 | 0.02% | [Open](./u/README.md) |
 | `Te` | 20419 | 0.02% | [Open](./te/README.md) |
 | `Mo` | 20028 | 0.02% | [Open](./mo/README.md) |
-| `Ag` | 19055 | 0.02% | [Open](./ag/README.md) |
-| `Sb` | 19015 | 0.02% | [Open](./sb/README.md) |
+| `Ag` | 19057 | 0.02% | [Open](./ag/README.md) |
+| `Sb` | 19017 | 0.02% | [Open](./sb/README.md) |
 | `Pb` | 18185 | 0.01% | [Open](./pb/README.md) |
-| `Au` | 17816 | 0.01% | [Open](./au/README.md) |
-| `Ba` | 15732 | 0.01% | [Open](./ba/README.md) |
+| `Au` | 17871 | 0.01% | [Open](./au/README.md) |
+| `Ba` | 15733 | 0.01% | [Open](./ba/README.md) |
 | `Bi` | 15608 | 0.01% | [Open](./bi/README.md) |
 | `Hg` | 15125 | 0.01% | [Open](./hg/README.md) |
-| `Rh` | 14833 | 0.01% | [Open](./rh/README.md) |
+| `Rh` | 14844 | 0.01% | [Open](./rh/README.md) |
 | `In` | 13932 | 0.01% | [Open](./in/README.md) |
 | `Cs` | 12082 | 0.01% | [Open](./cs/README.md) |
 | `Ga` | 11598 | 0.01% | [Open](./ga/README.md) |
 | `Rb` | 10891 | 0.01% | [Open](./rb/README.md) |
-| `Re` | 10107 | 0.01% | [Open](./re/README.md) |
+| `Re` | 10108 | 0.01% | [Open](./re/README.md) |
 | `Ac` | 9772 | 0.01% | [Open](./ac/README.md) |
-| `Os` | 8597 | 0.01% | [Open](./os/README.md) |
+| `Os` | 8598 | 0.01% | [Open](./os/README.md) |
 | `Sr` | 8275 | 0.01% | [Open](./sr/README.md) |
 | `Ce` | 8210 | 0.01% | [Open](./ce/README.md) |
 | `La` | 8057 | 0.01% | [Open](./la/README.md) |
-| `Cd` | 7941 | 0.01% | [Open](./cd/README.md) |
+| `Cd` | 7940 | 0.01% | [Open](./cd/README.md) |
 | `Gd` | 7696 | 0.01% | [Open](./gd/README.md) |
 | `Nb` | 6583 | 0.01% | [Open](./nb/README.md) |
 | `Tl` | 6100 | 0.00% | [Open](./tl/README.md) |

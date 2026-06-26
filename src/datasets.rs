@@ -9,8 +9,9 @@ use flate2::read::GzDecoder;
 use mascot_rs::prelude::*;
 use molecular_formulas::prelude::ChemicalFormula;
 use smiles_parser::{
-    DatasetFetchOptions, PUBCHEM_SMILES, SmilesDatasetRecordSource, smiles::Smiles,
+    DatasetFetchOptions, PUBCHEM_SMILES, SmilesDatasetRecordSource, SmilesDatasetSource, smiles::Smiles,
 };
+use indicatif::{ProgressBar, ProgressStyle};
 
 use crate::{
     chemistry::element_counts_in_formula,
@@ -19,6 +20,7 @@ use crate::{
     metadata::{metadata_value, optional_debug_label},
     records::MoleculeRecord,
 };
+
 
 pub async fn process_dataset<F>(
     dataset_name: &str,
@@ -160,7 +162,11 @@ where
     let mut skipped = 0usize;
     let mut processed = 0usize;
 
+    let bar = ProgressBar::new(PUBCHEM_SMILES.iter_smiles().iter().len() as u64);
+
     for record in pubchem_records.take(limit.unwrap_or(usize::MAX)) {
+        bar.inc(1);
+
         let record =
             record.map_err(|source| SpectraProfilerError::DatasetLoad { source: source.into() })?;
 

@@ -52,16 +52,16 @@ PubChem
 40000.0
 </text>
 <polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="1119,815 1119,820 "/>
-<text x="1221" y="825" dy="0.76em" text-anchor="middle" font-family="sans-serif" font-size="9.67741935483871" opacity="1" fill="#000000">
+<text x="1220" y="825" dy="0.76em" text-anchor="middle" font-family="sans-serif" font-size="9.67741935483871" opacity="1" fill="#000000">
 45000.0
 </text>
-<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="1221,815 1221,820 "/>
+<polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="1220,815 1220,820 "/>
 <text x="1322" y="825" dy="0.76em" text-anchor="middle" font-family="sans-serif" font-size="9.67741935483871" opacity="1" fill="#000000">
 50000.0
 </text>
 <polyline fill="none" opacity="1" stroke="#000000" stroke-width="1" points="1322,815 1322,820 "/>
 <rect x="305" y="60" width="929" height="754" opacity="0.6" fill="#0000FF" stroke="none"/>
 <text x="1243" y="814" dy="0.76em" text-anchor="start" font-family="sans-serif" font-size="12.903225806451614" opacity="1" fill="#000000">
-45664 (0.04%)
+45675 (0.04%)
 </text>
 </svg>
